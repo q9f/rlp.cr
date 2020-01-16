@@ -34,4 +34,32 @@ module Rlp
 
   # An empty array is defined as `0xC0`.
   EMPTY_ARRAY = Bytes[OFFSET_ARRAY]
+
+  # encodes arbitrary data as recursive length prefix blob
+  def self.encode(data)
+  end
+
+  # decodes arbitrary data from a recursive length prefix blob
+  def self.decode(blob)
+  end
+
+  # gets the length of the input data using the first byte
+  def self.get_length(data : Bytes)
+    length = -9
+    prefix = data.first
+    if prefix < OFFSET_STRING
+      length = 1
+    elsif prefix < OFFSET_ARRAY
+      length = 1 + prefix - OFFSET_STRING
+    else
+      length = 1 + prefix - OFFSET_ARRAY
+    end
+    return length
+  end
+
+  # gets the number of bytes required to represent a big integer
+  def self.bytes_size(i : BigInt)
+    b = Util.int_to_bin i
+    return b.size
+  end
 end
