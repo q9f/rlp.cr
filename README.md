@@ -26,8 +26,10 @@ require "rlp"
 
 this library exposes the following modules (in logical order):
 
-* `rlp`: necessary constants and data structures
-* `rlp::Util`: a collection of utilities to ease the conversion between data types
+* `Rlp`: necessary constants and data structures
+* `Rlp::Util`: a collection of utilities to ease the conversion between data types
+
+_this library is work in progress._
 
 # documentation
 
