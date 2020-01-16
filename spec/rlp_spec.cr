@@ -36,4 +36,12 @@ describe Rlp do
     # An empty array is defined as `0xC0`.
     Rlp::EMPTY_ARRAY.should eq Bytes[192]
   end
+
+  it "can find the correct size of a byte representation" do
+    Rlp.bytes_size(BigInt.new).should eq 1
+    Rlp.bytes_size(BigInt.new(255)).should eq 1
+    Rlp.bytes_size(BigInt.new(256)).should eq 2
+    Rlp.bytes_size(BigInt.new("18446744073709551616")).should eq 9
+    Rlp.bytes_size(BigInt.new("18446744073709551616")).should eq Rlp::Util.int_to_hex(BigInt.new("18446744073709551616")).size // 2
+  end
 end

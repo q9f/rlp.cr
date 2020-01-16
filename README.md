@@ -51,6 +51,8 @@ crystal spec --verbose
 
 create a pull request, and make sure tests and linter passes.
 
+this library with built with the help of the blog post by the mana team implementing [`rlp` in elixir](https://www.badykov.com/elixir/2018/05/06/rlp/) and coinmonks' [annotated version of the `rlp` specification](https://medium.com/coinmonks/data-structure-in-ethereum-episode-1-recursive-length-prefix-rlp-encoding-decoding-d1016832f919). ethereum classic's [`rlp` article](https://ethereumclassic.org/blog/2018-03-19-rlp/) allows for some sweet test cases.
+
 license: apache license v2.0
 
 contributors: [**@q9f**](https://github.com/q9f/)
