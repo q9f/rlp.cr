@@ -171,6 +171,17 @@ module Rlp
     end
   end
 
+  # rlp-encodes boolean data
+  def self.encode(o : Bool)
+    if o
+      # basically true is 1
+      return Bytes[1]
+    else
+      # and false is 0 which is equal the empty string
+      return EMPTY_STRING
+    end
+  end
+
   # decodes arbitrary data from a recursive length prefix blob
   def self.decode(blob)
   end
