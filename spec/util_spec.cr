@@ -32,12 +32,12 @@ describe Rlp::Util do
     Rlp::Util.bin_to_str(Bytes[97, 98, 99]).should eq "abc"
 
     # Big integers to binary bytes.
-    Rlp::Util.int_to_bin(BigInt.new "5").should eq Bytes[5]
-    Rlp::Util.int_to_bin(BigInt.new "1_000_000").should eq Bytes[15, 66, 64]
+    Rlp::Util.int_to_bin(5).should eq Bytes[5]
+    Rlp::Util.int_to_bin(1_000_000).should eq Bytes[15, 66, 64]
 
     # Big integers to hex strings.
-    Rlp::Util.int_to_hex(BigInt.new "1024").should eq "0400"
-    Rlp::Util.int_to_hex(BigInt.new "313373").should eq "04c81d"
+    Rlp::Util.int_to_hex(1024).should eq "0400"
+    Rlp::Util.int_to_hex(313373).should eq "04c81d"
 
     # Hex strings to binary bytes.
     Rlp::Util.hex_to_bin("0400").should eq Bytes[4, 0]
@@ -58,5 +58,26 @@ describe Rlp::Util do
     # String literals to hex strings.
     Rlp::Util.str_to_hex("d").should eq "64"
     Rlp::Util.str_to_hex("dog").should eq "646f67"
+  end
+
+  it "can concatenate bytes" do
+    # addition with empty slice should always equal the input byte
+    a = Slice(UInt8).empty
+    b = Bytes[0]
+    Rlp::Util.binary_add(a, a).should eq a
+    Rlp::Util.binary_add(a, b).should eq b
+    Rlp::Util.binary_add(b, a).should eq b
+
+    # prefixing or suffixing with a single byte
+    c = Bytes[97]
+    d = Bytes[98, 99]
+    Rlp::Util.binary_add(c, d).should eq Bytes[97, 98, 99]
+    Rlp::Util.binary_add(d, c).should eq Bytes[98, 99, 97]
+
+    # concatenation of more complex bytes
+    e = Rlp.encode(1_000_000)
+    f = Rlp.encode("A cat with a short string.")
+    Rlp::Util.binary_add(e, f).should eq Bytes[131, 15, 66, 64, 154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]
+    Rlp::Util.binary_add(f, e).should eq Bytes[154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46, 131, 15, 66, 64]
   end
 end
