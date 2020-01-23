@@ -50,18 +50,10 @@ module Rlp
     if b.bytesize < LIMIT_SHORT
       # length of the byte array plus 128 (OFFSET_STRING)
       prefix = UInt8.new b.bytesize + OFFSET_STRING
+      p = Bytes[prefix]
 
-      # concatenate bytes by writing to memory
-      result = IO::Memory.new b.bytesize + 1
-
-      # write the prefix byte
-      result.write_bytes prefix
-
-      # write each data byte
-      b.each do |v|
-        result.write_bytes UInt8.new v
-      end
-      return result.to_slice
+      # prefix the data with the prefix byte
+      return Util.binary_add p, b
     end
 
     # otherwise, the output is equal to the input prefixed by the
@@ -80,23 +72,13 @@ module Rlp
 
       # faithfully encode this length value plus 183.
       prefix = UInt8.new header.bytesize + OFFSET_STRING + LIMIT_SHORT - 1
+      p = Bytes[prefix]
 
-      # create a memory buffer for the prefix, header, and data
-      result = IO::Memory.new 1 + header_size + data_size
+      # prefix the header with the prefix byte
+      header = Util.binary_add p, header
 
-      # write the prefix byte
-      result.write_bytes prefix
-
-      # write the data size header
-      header.each do |l|
-        result.write_bytes l
-      end
-
-      # write each data byte
-      b.each do |v|
-        result.write_bytes UInt8.new v
-      end
-      return result.to_slice
+      # prefix the data with the header data
+      return Util.binary_add header, b
     else
       raise "invalid data provided (size out of range: #{b.bytesize})"
     end
@@ -109,20 +91,55 @@ module Rlp
       return EMPTY_ARRAY
     end
 
-    # If the concatenated serializations of each contained item are less than 56 bytes in length, then the output is equal to that concatenation prefixed by the byte equal to the length of this byte array plus 192.
-    if l.size < LIMIT_SHORT
-      l.each do |a|
-        pp a # @TODO
+    # concatenate the serializations of each contained item
+    body = Slice(UInt8).empty
+    l.each do |a|
+      if body.size === 0
+        body = encode a
+      else
+        body = Util.binary_add body, encode a
       end
     end
 
-    # Otherwise, the output is equal to the concatenated serializations prefixed by the minimal-length byte-array which when interpreted as a big-endian integer is equal to the length of the concatenated serializations byte array, which is itself prefixed by the number of bytes required to faithfully encode this length value plus 247.
-    if l.size < LIMIT_LONG
-      l.each do |a|
-        pp a # @TODO
-      end
+    # if the concatenated serializations of each contained item are
+    # less than 56 bytes in length, then the output is equal to
+    # that concatenation prefixed by the byte equal to the length of
+    # this byte array plus 192 (OFFSET_ARRAY)
+    if body.bytesize < LIMIT_SHORT
+      # length of this byte array plus 192 (OFFSET_ARRAY)
+      prefix = UInt8.new body.bytesize + OFFSET_ARRAY
+      p = Bytes[prefix]
+
+      # prefix the data with the prefix byte
+      return Util.binary_add p, body
+    end
+
+    # otherwise, the output is equal to the concatenated serializations
+    # prefixed by the minimal-length byte-array which when interpreted as
+    # a big-endian integer is equal to the length of the concatenated
+    # serializations byte array, which is itself prefixed by the number of bytes
+    # required to faithfully encode this length value plus 247.
+    if body.bytesize < LIMIT_LONG
+      # get the size of the data
+      data_size = body.bytesize
+
+      # get the size required to store the size as byte slice
+      header_size = bytes_size BigInt.new data_size
+
+      # get the binary representation of the data size
+      header = Util.int_to_bin BigInt.new data_size
+
+      # faithfully encode this length value plus 247.
+      prefix = UInt8.new header.bytesize + OFFSET_ARRAY + LIMIT_SHORT - 1
+      p = Bytes[prefix]
+
+      # prefix the header with the prefix byte
+      header = Util.binary_add p, header
+
+      # prefix the data with the header data
+      return Util.binary_add header, body
     else
-      raise "invalid list provided (size out of range: #{l.size})"
+      raise "invalid list provided (size out of range: #{body.bytesize})"
     end
   end
 
@@ -140,7 +157,7 @@ module Rlp
   end
 
   # rlp-encodes scalar data
-  def self.encode(i : BigInt)
+  def self.encode(i : Int)
     if i === 0
       # the scalar 0 is treated as empty string literal, not as zero byte.
       return EMPTY_STRING

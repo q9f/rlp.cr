@@ -61,13 +61,13 @@ module Rlp::Util
   # Converts big integers to binary bytes.
   #
   # Parameters:
-  # * `i` (`BigInt`): the big integer to convert.
+  # * `i` (`Int`): the big integer to convert.
   #
   # ```
-  # Rlp::Util.int_to_bin BigInt.new "1_000_000"
+  # Rlp::Util.int_to_bin 1_000_000
   # # => Bytes[15, 66, 64]
   # ```
-  def self.int_to_bin(i : BigInt)
+  def self.int_to_bin(i : Int)
     h = i.to_s 16
     h = "0#{h}" if h.size.odd?
     return h.hexbytes
@@ -76,13 +76,13 @@ module Rlp::Util
   # Converts big integers to hex-encoded strings.
   #
   # Parameters:
-  # * `i` (`BigInt`): the big integer to convert.
+  # * `i` (`Int`): the big integer to convert.
   #
   # ```
-  # Rlp::Util.int_to_hex BigInt.new "313_373"
+  # Rlp::Util.int_to_hex 313_373
   # # => "04c81d"
   # ```
-  def self.int_to_hex(i : BigInt)
+  def self.int_to_hex(i : Int)
     h = i.to_s 16
     h = "0#{h}" if h.size.odd?
     return h
@@ -151,5 +151,24 @@ module Rlp::Util
   # ```
   def self.str_to_hex(s : String)
     return s.to_slice.hexstring
+  end
+
+  # concatenates two byte slices of uint8
+  def self.binary_add(a : Bytes, b : Bytes)
+    # concatenate bytes by writing to memory
+    c = IO::Memory.new a.bytesize + b.bytesize
+
+    # write the bytes from `a`
+    a.each do |v|
+      c.write_bytes UInt8.new v
+    end
+
+    # write the bytes from `b`
+    b.each do |v|
+      c.write_bytes UInt8.new v
+    end
+
+    # return a slice
+    return c.to_slice
   end
 end
