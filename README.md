@@ -6,6 +6,14 @@
 
 a native library implementing `rlp` purely for the crystal language. `rlp` is ethereum's recursive length prefix used to encoded arbitray data structures.
 
+this library allows for rlp-encoding of:
+* binary data (assumed encoded)
+* boolean values (true, false)
+* scalars (positive integers)
+* string literals
+* arrays containing any of the the above
+* nested arrays containing any of the above
+
 # installation
 
 add the `rlp` library to your `shard.yml`
@@ -26,7 +34,7 @@ require "rlp"
 
 this library exposes the following modules (in logical order):
 
-* `Rlp`: necessary constants and data structures
+* `Rlp`: core library exposing `encode` and `decode` logic
 * `Rlp::Util`: a collection of utilities to ease the conversion between data types
 
 _this library is work in progress._
