@@ -4,7 +4,7 @@
 [![Language](https://img.shields.io/github/languages/top/q9f/rlp.cr?color=black)](https://github.com/q9f/rlp.cr/search?l=crystal)
 [![License](https://img.shields.io/github/license/q9f/rlp.cr.svg?color=black)](LICENSE)
 
-a native library implementing `rlp` purely for the crystal language. `rlp` is ethereum's recursive length prefix used to encoded arbitray data structures.
+a native library implementing `rlp` purely for the crystal language. `rlp` is ethereum's recursive length prefix used to encode arbitray data structures.
 
 this library allows for rlp-encoding of:
 * binary data (assumed encoded)
