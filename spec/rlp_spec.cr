@@ -154,10 +154,10 @@ describe Rlp do
     # ref: https://github.com/ethereum/wiki/wiki/RLP
     cat = Rlp::Util.str_to_bin("cat")
     dog = Rlp::Util.str_to_bin("dog")
-    Rlp.encode([ "cat", "dog" ]).should eq Bytes[0xc8, 0x83, cat[0], cat[1], cat[2], 0x83, dog[0], dog[1], dog[2]]
-    
+    Rlp.encode(["cat", "dog"]).should eq Bytes[0xc8, 0x83, cat[0], cat[1], cat[2], 0x83, dog[0], dog[1], dog[2]]
+
     # the set theoretical representation of three
-    Rlp.encode([ [] of String, [[] of String], [ [] of String, [[] of String] ] ]).should eq Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0]
+    Rlp.encode([[] of String, [[] of String], [[] of String, [[] of String]]]).should eq Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0]
 
     # test cases from elexir (mana)
     # ref: https://www.badykov.com/elixir/2018/05/06/rlp/
