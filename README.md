@@ -39,6 +39,16 @@ this library exposes the following modules (in logical order):
 
 _this library is work in progress._
 
+basic usage:
+
+```crystal
+rlp = Rlp.encode("A cat with a short string.")
+=> Bytes[154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]
+
+pp Rlp::Util.bin_to_hex rlp
+=> "9a4120636174207769746820612073686f727420737472696e672e"
+```
+
 # documentation
 
 generate a local copy with:
