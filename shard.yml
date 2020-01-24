@@ -1,5 +1,5 @@
 name: rlp
-version: 0.1.0
+version: 0.1.1
 description: "a native library implementing recursive lengths prefixes purely for the crystal language"
 
 authors:
