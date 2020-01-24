@@ -10,7 +10,7 @@ this library allows for rlp-encoding of:
 * binary data (assumed encoded)
 * boolean values (true, false)
 * scalars (positive integers)
-* string literals
+* string literals and characters
 * arrays containing any of the the above
 * nested arrays containing any of the above
 

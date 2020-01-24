@@ -171,6 +171,11 @@ module Rlp
     end
   end
 
+  # rlp-encodes characters
+  def self.encode(c : Char)
+    return encode c.to_s
+  end
+
   # rlp-encodes boolean data
   def self.encode(o : Bool)
     if o
