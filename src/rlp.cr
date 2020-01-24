@@ -64,11 +64,8 @@ module Rlp
       # get the size of the data
       data_size = b.bytesize
 
-      # get the size required to store the size as byte slice
-      header_size = bytes_size BigInt.new data_size
-
       # get the binary representation of the data size
-      header = Util.int_to_bin BigInt.new data_size
+      header = Util.int_to_bin data_size
 
       # faithfully encode this length value plus 183.
       prefix = UInt8.new header.bytesize + OFFSET_STRING + LIMIT_SHORT - 1
@@ -123,11 +120,8 @@ module Rlp
       # get the size of the data
       data_size = body.bytesize
 
-      # get the size required to store the size as byte slice
-      header_size = bytes_size BigInt.new data_size
-
       # get the binary representation of the data size
-      header = Util.int_to_bin BigInt.new data_size
+      header = Util.int_to_bin data_size
 
       # faithfully encode this length value plus 247.
       prefix = UInt8.new header.bytesize + OFFSET_ARRAY + LIMIT_SHORT - 1
@@ -173,6 +167,7 @@ module Rlp
 
   # rlp-encodes characters
   def self.encode(c : Char)
+    # we simpy treat characters as strings
     return encode c.to_s
   end
 
@@ -189,6 +184,7 @@ module Rlp
 
   # decodes arbitrary data from a recursive length prefix blob
   def self.decode(blob)
+    # @TODO unimplemented
   end
 
   # gets the length of the input data using the first byte
@@ -203,11 +199,5 @@ module Rlp
       length = 1 + prefix - OFFSET_ARRAY
     end
     return length
-  end
-
-  # gets the number of bytes required to represent a big integer
-  def self.bytes_size(i : BigInt)
-    b = Util.int_to_bin i
-    return b.size
   end
 end
