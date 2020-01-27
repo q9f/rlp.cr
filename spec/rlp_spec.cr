@@ -169,4 +169,17 @@ describe Rlp do
     # ref: https://medium.com/coinmonks/data-structure-in-ethereum-episode-1-recursive-length-prefix-rlp-encoding-decoding-d1016832f919
     Rlp.encode(["hello", "world"]).should eq Bytes[0xcc, 0x85, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x85, 0x77, 0x6f, 0x72, 0x6c, 0x64]
   end
+
+  it "can decode rlp" do
+    pp ""
+    pp Rlp.decode(Bytes[0])
+    pp Rlp.decode(Bytes[5])
+    pp Rlp.decode(Bytes[97])
+    pp Rlp.decode(Bytes[48])
+    pp Rlp.decode(Bytes[128])
+    pp Rlp.decode(Bytes[192])
+    pp Rlp.decode(Bytes[131, 97, 98, 99])
+    pp Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0]
+    pp Rlp.decode(Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0])
+  end
 end
