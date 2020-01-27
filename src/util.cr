@@ -30,6 +30,38 @@ module Rlp::Util
     return BigInt.new b.hexstring, 16
   end
 
+  # Overloaded function `bin_to_int` with `String` to allow for conversion of
+  # decoded `Rlp` objects that might be a string already.
+  #
+  # Parameters:
+  # * `s` (`String`): the `Rlp` string data to convert.
+  #
+  # ```
+  # Rlp::Util.bin_to_int ""
+  # # => 128
+  # ```
+  #
+  # Note, that the only `String` that `Rlp.decode` actually returns is `""`.
+  #
+  # Raises if `s` actually contains a string. Should use `hex_to_int` instead.
+  def self.bin_to_int(s : String)
+    # empty strings will be treated as 128
+    return 128 if s.size === 0
+    raise "cannot convert string literals to numbers, did you mean `hex_to_int`?"
+  end
+
+  # Overloaded function `bin_to_int` with `Array` to allow for conversion of
+  # decoded `Rlp` objects that might be an `RecursiveArray`.
+  #
+  # Parameters:
+  # * `a` (`RecursiveArray`): the `Rlp` array data to convert.
+  #
+  # Raises if `a` actually contains an array. Shouldn't be used if decoded
+  # `Rlp` data could contain nested data structures.
+  def self.bin_to_int(a : Array)
+    raise "cannot convert array data to numbers, please unpack first"
+  end
+
   # Converts binary bytes to a hex-encoded string.
   #
   # Parameters:
@@ -56,6 +88,32 @@ module Rlp::Util
   # ```
   def self.bin_to_str(b : Bytes)
     return String.new b
+  end
+
+  # Overloaded function `bin_to_str` with `String` to allow for conversion of
+  # decoded `Rlp` objects that might be a string already.
+  #
+  # Parameters:
+  # * `s` (`String`): the `Rlp` string data to convert.
+  #
+  # ```
+  # Rlp::Util.bin_to_str ""
+  # # => ""
+  # ```
+  def self.bin_to_str(s : String)
+    return s
+  end
+
+  # Overloaded function `bin_to_str` with `Array` to allow for conversion of
+  # decoded `Rlp` objects that might be an `RecursiveArray`.
+  #
+  # Parameters:
+  # * `a` (`RecursiveArray`): the `Rlp` array data to convert.
+  #
+  # Raises if `a` actually contains an array. Shouldn't be used if decoded
+  # `Rlp` data could contain nested data structures.
+  def self.bin_to_str(a : Array)
+    raise "cannot convert array data to string, please unpack first"
   end
 
   # Converts big integers to binary bytes.
