@@ -243,7 +243,7 @@ module Rlp
         elsif prefix < OFFSET_ARRAY
           # this is a nested long string literal
           header_size = prefix - 183
-          header = rlp[2, 2 + header_size]
+          header = rlp[1, header_size]
           length = 1 + header_size + Util.bin_to_int header
         elsif prefix < OFFSET_ARRAY + LIMIT_SHORT
           # this is a nested small array
@@ -251,7 +251,7 @@ module Rlp
         else
           # this is a nested massive array
           header_size = prefix - 247
-          header = rlp[2, 2 + header_size]
+          header = rlp[1, header_size]
           length = 1 + header_size + Util.bin_to_int header
         end
 
