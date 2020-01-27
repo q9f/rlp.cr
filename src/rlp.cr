@@ -35,6 +35,8 @@ module Rlp
   # An empty array is defined as `0xC0`.
   EMPTY_ARRAY = Bytes[OFFSET_ARRAY]
 
+  alias RlpArray = String|Bytes|Array(RlpArray)
+
   # rlp-encodes binary data
   def self.encode(b : Bytes)
     # if the byte-array contains a single byte solely
@@ -204,9 +206,7 @@ module Rlp
       offset = 1 + prefix - 183
       return rlp[offset, length - offset]
     else
-      # this pretty much fails for arrays
-      # ref: https://github.com/crystal-lang/crystal/issues/8719
-      result = [] of (String | Bytes | Array(String | Bytes))
+      result = [] of RlpArray
       decoded = rlp
       if prefix < OFFSET_ARRAY + LIMIT_SHORT
         offset = 1
@@ -233,8 +233,6 @@ module Rlp
           header = decoded[2, 2 + header_size]
           offset = 1 + header_size + Util.bin_to_int header
         end
-        # @TODO: fails here
-        # ref: https://github.com/q9f/rlp.cr/issues/2
         result << decode decoded
         decoded = decoded[offset, length - offset]
       end
