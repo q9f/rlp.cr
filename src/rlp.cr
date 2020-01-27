@@ -183,21 +183,67 @@ module Rlp
   end
 
   # decodes arbitrary data from a recursive length prefix blob
-  def self.decode(blob)
-    # @TODO unimplemented
+  def self.decode(rlp : Bytes)
+    # catch known edgecases and return early
+    if rlp === EMPTY_STRING
+      return ""
+    elsif rlp === EMPTY_ARRAY
+      return [] of String
+    end
+
+    # take a look at the prefix byte
+    prefix = rlp.first
+    length = rlp.bytesize
+    if prefix < OFFSET_STRING && length === 1
+      # if the value is lower 128, return it
+      return rlp
+    elsif prefix < OFFSET_STRING + LIMIT_SHORT
+      offset = 1
+      return rlp[offset, length - offset]
+    elsif prefix < OFFSET_ARRAY
+      offset = 1 + prefix - 183
+      return rlp[offset, length - offset]
+    else
+      # this pretty much fails for arrays
+      # ref: https://github.com/crystal-lang/crystal/issues/8719
+      result = [] of (String | Bytes | Array(String | Bytes))
+      decoded = rlp
+      if prefix < OFFSET_ARRAY + LIMIT_SHORT
+        offset = 1
+        decoded = rlp[offset, length - offset]
+      else
+        offset = 1 + prefix - 247
+        decoded = rlp[offset, length - offset]
+      end
+      while decoded.bytesize > 0
+        prefix = decoded.first
+        length = decoded.bytesize
+        if prefix < OFFSET_STRING
+          offset = 1
+        elsif prefix < OFFSET_STRING + LIMIT_SHORT
+          offset = 1 + prefix - OFFSET_STRING
+        elsif prefix < OFFSET_ARRAY
+          header_size = prefix - 183
+          header = decoded[2, 2 + header_size]
+          offset = 1 + header_size + Util.bin_to_int header
+        elsif prefix < OFFSET_ARRAY + LIMIT_SHORT
+          offset = 1 + prefix - OFFSET_ARRAY
+        else
+          header_size = prefix - 247
+          header = decoded[2, 2 + header_size]
+          offset = 1 + header_size + Util.bin_to_int header
+        end
+        # @TODO: fails here
+        # ref: https://github.com/q9f/rlp.cr/issues/2
+        result << decode decoded
+        decoded = decoded[offset, length - offset]
+      end
+      return result
+    end
   end
 
-  # gets the length of the input data using the first byte
-  def self.get_length(data : Bytes)
-    length = -9
-    prefix = data.first
-    if prefix < OFFSET_STRING
-      length = 1
-    elsif prefix < OFFSET_ARRAY
-      length = 1 + prefix - OFFSET_STRING
-    else
-      length = 1 + prefix - OFFSET_ARRAY
-    end
-    return length
+  # decodes rlp data from hex-encoded strings
+  def self.decode(hex : String)
+    return decode Util.hex_to_bin hex
   end
 end
