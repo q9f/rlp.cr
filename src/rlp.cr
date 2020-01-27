@@ -190,15 +190,12 @@ module Rlp
   # it's up to the protocol to determine the meaning of the data
   # as defined in ethereum's design rationale.
   def self.decode(rlp : Bytes)
-    
     # catch known edgecases and return early
     if rlp === EMPTY_STRING
-    
       # we return an string here instead of binary because we know for
       # certain that this value represents an empty string
       return ""
     elsif rlp === EMPTY_ARRAY
-    
       # we return an array here instead of binary because we know for
       # certain that this value represents an empty array
       return [] of RecursiveArray
@@ -208,62 +205,50 @@ module Rlp
     prefix = rlp.first
     length = rlp.bytesize
     if prefix < OFFSET_STRING && length === 1
-
       # if the value is lower 128, return the byte directly
       return rlp
     elsif prefix < OFFSET_STRING + LIMIT_SHORT
-
       # if it's a short string, cut off the prefix and return the string
       offset = 1
       return rlp[offset, length - offset]
     elsif prefix < OFFSET_ARRAY
-
       # if it's a long string, cut off the prefix header and return the string
       offset = 1 + prefix - 183
       return rlp[offset, length - offset]
     else
-
       # if it's not a byte or a string, then we have any type of array here
       result = [] of RecursiveArray
       if prefix < OFFSET_ARRAY + LIMIT_SHORT
-
         # if it's a small array, cut off the prefix
         offset = 1
         rlp = rlp[offset, length - offset]
       else
-
         # if it's a massive array, cut off the prefix header
         offset = 1 + prefix - 247
         rlp = rlp[offset, length - offset]
       end
-      
+
       # now we recursively decode each item nested in the array
       while rlp.bytesize > 0
-        
         # getting the prefix of each item (if any)
         prefix = rlp.first
         length = 0
         offset = 0
         if prefix < OFFSET_STRING
-
           # this is a nested byte of length 1
           length = 1
         elsif prefix < OFFSET_STRING + LIMIT_SHORT
-
           # this is a nested short string literal
           length = 1 + prefix - OFFSET_STRING
         elsif prefix < OFFSET_ARRAY
-
           # this is a nested long string literal
           header_size = prefix - 183
           header = rlp[2, 2 + header_size]
           length = 1 + header_size + Util.bin_to_int header
         elsif prefix < OFFSET_ARRAY + LIMIT_SHORT
-
           # this is a nested small array
           length = 1 + prefix - OFFSET_ARRAY
         else
-
           # this is a nested massive array
           header_size = prefix - 247
           header = rlp[2, 2 + header_size]
