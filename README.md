@@ -15,6 +15,14 @@ this library allows for rlp-encoding of:
 * arrays containing any of the the above
 * nested arrays containing any of the above
 
+this library allows for decoding of:
+* binary-encoded rlp-data
+* hexadecimal-encoded rlp-data
+
+note, that decoded data is always binary as per ethereum's design rationale:
+
+> _"RLP does not attempt to define any specific data types such as booleans, floats, doubles or even integers; instead, it simply exists to store structure, in the form of nested arrays, and leaves it up to the protocol to determine the meaning of the arrays"_
+
 # installation
 
 add the `rlp` library to your `shard.yml`
@@ -36,18 +44,27 @@ require "rlp"
 this library exposes the following modules (in logical order):
 
 * `Rlp`: core library exposing `encode` and `decode` logic
+* `Rlp::RecursiveArray`: is a data type alias allowing for arrays of unknown nesting depth
 * `Rlp::Util`: a collection of utilities to ease the conversion between data types
-
-_this library is work in progress._
 
 basic usage:
 
 ```crystal
+# rlp-encode a string
 rlp = Rlp.encode("A cat with a short string.")
-=> Bytes[154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]
+# => Bytes[154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]
 
-pp Rlp::Util.bin_to_hex rlp
-=> "9a4120636174207769746820612073686f727420737472696e672e"
+# (optionally) get a hex representation of the rlp-encoded data
+hex = Rlp::Util.bin_to_hex rlp
+# => "9a4120636174207769746820612073686f727420737472696e672e"
+
+# decode the rlp data
+bin = Rlp.decode hex
+# => Bytes[65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]
+
+# we expect a string, so we can try to convert it here
+str = Rlp::Util.bin_to_str bin
+# => "A cat with a short string."
 ```
 
 # documentation
