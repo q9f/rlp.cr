@@ -171,15 +171,13 @@ describe Rlp do
   end
 
   it "can decode rlp" do
-    pp ""
-    pp Rlp.decode(Bytes[0])
-    pp Rlp.decode(Bytes[5])
-    pp Rlp.decode(Bytes[97])
-    pp Rlp.decode(Bytes[48])
-    pp Rlp.decode(Bytes[128])
-    pp Rlp.decode(Bytes[192])
-    pp Rlp.decode(Bytes[131, 97, 98, 99])
-    pp Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0]
-    pp Rlp.decode(Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0])
+    Rlp.decode(Bytes[0]).should eq Bytes[0]
+    Rlp.decode(Bytes[5]).should eq Bytes[5]
+    Rlp.decode(Bytes[97]).should eq Bytes[97]
+    Rlp.decode(Bytes[48]).should eq Bytes[48]
+    Rlp.decode(Bytes[128]).should eq ""
+    Rlp.decode(Bytes[192]).should eq Array(String).new 0
+    Rlp.decode(Bytes[131, 97, 98, 99]).should eq Bytes[97, 98, 99]
+    Rlp.decode(Bytes[0xc7, 0xc0, 0xc1, 0xc0, 0xc3, 0xc0, 0xc1, 0xc0]).should eq [[] of String, [[] of String], [[] of String, [[] of String]]]
   end
 end
