@@ -35,7 +35,8 @@ module Rlp
   # An empty array is defined as `0xC0`.
   EMPTY_ARRAY = Bytes[OFFSET_ARRAY]
 
-  alias RlpArray = String|Bytes|Array(RlpArray)
+  # A recursive array alias for arrays of unknown nesting depth.
+  alias RecursiveArray = String | Bytes | Array(RecursiveArray)
 
   # rlp-encodes binary data
   def self.encode(b : Bytes)
@@ -184,58 +185,101 @@ module Rlp
     end
   end
 
-  # decodes arbitrary data from a recursive length prefix blob
+  # decodes arbitrary data from a recursive length prefix blob.
+  # note, that the returned data only restores the data structure.
+  # it's up to the protocol to determine the meaning of the data
+  # as defined in ethereum's design rationale.
   def self.decode(rlp : Bytes)
+    
     # catch known edgecases and return early
     if rlp === EMPTY_STRING
+    
+      # we return an string here instead of binary because we know for
+      # certain that this value represents an empty string
       return ""
     elsif rlp === EMPTY_ARRAY
-      return [] of String
+    
+      # we return an array here instead of binary because we know for
+      # certain that this value represents an empty array
+      return [] of RecursiveArray
     end
 
-    # take a look at the prefix byte
+    # firstly, takes a look at the prefix byte
     prefix = rlp.first
     length = rlp.bytesize
     if prefix < OFFSET_STRING && length === 1
-      # if the value is lower 128, return it
+
+      # if the value is lower 128, return the byte directly
       return rlp
     elsif prefix < OFFSET_STRING + LIMIT_SHORT
+
+      # if it's a short string, cut off the prefix and return the string
       offset = 1
       return rlp[offset, length - offset]
     elsif prefix < OFFSET_ARRAY
+
+      # if it's a long string, cut off the prefix header and return the string
       offset = 1 + prefix - 183
       return rlp[offset, length - offset]
     else
-      result = [] of RlpArray
-      decoded = rlp
+
+      # if it's not a byte or a string, then we have any type of array here
+      result = [] of RecursiveArray
       if prefix < OFFSET_ARRAY + LIMIT_SHORT
+
+        # if it's a small array, cut off the prefix
         offset = 1
-        decoded = rlp[offset, length - offset]
+        rlp = rlp[offset, length - offset]
       else
+
+        # if it's a massive array, cut off the prefix header
         offset = 1 + prefix - 247
-        decoded = rlp[offset, length - offset]
+        rlp = rlp[offset, length - offset]
       end
-      while decoded.bytesize > 0
-        prefix = decoded.first
-        length = decoded.bytesize
+      
+      # now we recursively decode each item nested in the array
+      while rlp.bytesize > 0
+        
+        # getting the prefix of each item (if any)
+        prefix = rlp.first
+        length = 0
+        offset = 0
         if prefix < OFFSET_STRING
-          offset = 1
+
+          # this is a nested byte of length 1
+          length = 1
         elsif prefix < OFFSET_STRING + LIMIT_SHORT
-          offset = 1 + prefix - OFFSET_STRING
+
+          # this is a nested short string literal
+          length = 1 + prefix - OFFSET_STRING
         elsif prefix < OFFSET_ARRAY
+
+          # this is a nested long string literal
           header_size = prefix - 183
-          header = decoded[2, 2 + header_size]
-          offset = 1 + header_size + Util.bin_to_int header
+          header = rlp[2, 2 + header_size]
+          length = 1 + header_size + Util.bin_to_int header
         elsif prefix < OFFSET_ARRAY + LIMIT_SHORT
-          offset = 1 + prefix - OFFSET_ARRAY
+
+          # this is a nested small array
+          length = 1 + prefix - OFFSET_ARRAY
         else
+
+          # this is a nested massive array
           header_size = prefix - 247
-          header = decoded[2, 2 + header_size]
-          offset = 1 + header_size + Util.bin_to_int header
+          header = rlp[2, 2 + header_size]
+          length = 1 + header_size + Util.bin_to_int header
         end
-        result << decode decoded
-        decoded = decoded[offset, length - offset]
+
+        # we push the decoded item to the result
+        result << decode rlp[offset, length]
+        offset = length
+        length = rlp.size - length
+
+        # and move on with the rest of the data
+        rlp = rlp[offset, length]
       end
+
+      # until we decoded all items and return the resulting structure
       return result
     end
   end
