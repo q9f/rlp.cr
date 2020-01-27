@@ -98,6 +98,7 @@ module Rlp::Util
   # # => Bytes[4, 200, 29]
   # ```
   def self.hex_to_bin(h : String)
+    h = "0#{h}" if h.size.odd?
     return h.hexbytes
   end
 
@@ -111,6 +112,7 @@ module Rlp::Util
   # # => 313373
   # ```
   def self.hex_to_int(h : String)
+    h = "0#{h}" if h.size.odd?
     return BigInt.new h, 16
   end
 
@@ -124,6 +126,7 @@ module Rlp::Util
   # # => "dog"
   # ```
   def self.hex_to_str(h : String)
+    h = "0#{h}" if h.size.odd?
     return String.new h.hexbytes
   end
 
