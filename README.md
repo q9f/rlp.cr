@@ -1,6 +1,7 @@
 # rlp.cr
 
 [![Build Status](https://img.shields.io/github/workflow/status/q9f/rlp.cr/Nightly)](https://github.com/q9f/rlp.cr/actions)
+[![Release](https://img.shields.io/github/v/release/q9f/rlp.cr?include_prereleases&color=black)](https://github.com/q9f/rlp.cr/releases/latest)
 [![Language](https://img.shields.io/github/languages/top/q9f/rlp.cr?color=black)](https://github.com/q9f/rlp.cr/search?l=crystal)
 [![License](https://img.shields.io/github/license/q9f/rlp.cr.svg?color=black)](LICENSE)
 
