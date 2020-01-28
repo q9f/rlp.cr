@@ -35,7 +35,7 @@ module Rlp
   # An empty array is defined as `0xC0`.
   EMPTY_ARRAY = Bytes[OFFSET_ARRAY]
 
-  # A recursive array alias for arrays of unknown nesting depth.
+  # An recursive array alias for arrays of unknown nesting depth.
   alias RecursiveArray = String | Bytes | Array(RecursiveArray)
 
   # rlp-encodes binary data
@@ -216,24 +216,23 @@ module Rlp
       offset = 1 + prefix - 183
       return rlp[offset, length - offset]
     else
-      # if it's not a byte or a string, then we have any type of array here
+      # if it's not a byte or a string, then we have some type of array here
       result = [] of RecursiveArray
       if prefix < OFFSET_ARRAY + LIMIT_SHORT
         # if it's a small array, cut off the prefix
         offset = 1
         rlp = rlp[offset, length - offset]
       else
-        # if it's a massive array, cut off the prefix header
+        # if it's a massive array, cut off the prefix and header
         offset = 1 + prefix - 247
         rlp = rlp[offset, length - offset]
       end
 
       # now we recursively decode each item nested in the array
       while rlp.bytesize > 0
-        # getting the prefix of each item (if any)
+        # getting the prefix of each nested item (if any)
         prefix = rlp.first
         length = 0
-        offset = 0
         if prefix < OFFSET_STRING
           # this is a nested byte of length 1
           length = 1
@@ -255,8 +254,8 @@ module Rlp
           length = 1 + header_size + Util.bin_to_int header
         end
 
-        # we push the decoded item to the result
-        result << decode rlp[offset, length]
+        # we push the recursively decoded item to the result
+        result << decode rlp[0, length]
         offset = length
         length = rlp.size - length
 

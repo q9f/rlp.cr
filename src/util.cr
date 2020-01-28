@@ -53,11 +53,8 @@ module Rlp::Util
   # Overloaded function `bin_to_int` with `Array` to allow for conversion of
   # decoded `Rlp` objects that might be an `RecursiveArray`.
   #
-  # Parameters:
-  # * `a` (`RecursiveArray`): the `Rlp` array data to convert.
-  #
-  # Raises if `a` actually contains an array. Shouldn't be used if decoded
-  # `Rlp` data could contain nested data structures.
+  # Raises in any case if `a` actually contains an array. Shouldn't be used
+  # if decoded `Rlp` data could contain nested data structures.
   def self.bin_to_int(a : Array)
     raise "cannot convert array data to numbers, please unpack first"
   end
@@ -107,11 +104,8 @@ module Rlp::Util
   # Overloaded function `bin_to_str` with `Array` to allow for conversion of
   # decoded `Rlp` objects that might be an `RecursiveArray`.
   #
-  # Parameters:
-  # * `a` (`RecursiveArray`): the `Rlp` array data to convert.
-  #
-  # Raises if `a` actually contains an array. Shouldn't be used if decoded
-  # `Rlp` data could contain nested data structures.
+  # Raises in any case if `a` actually contains an array. Shouldn't be used
+  # if decoded `Rlp` data could contain nested data structures.
   def self.bin_to_str(a : Array)
     raise "cannot convert array data to string, please unpack first"
   end
