@@ -16,8 +16,8 @@ this library allows for rlp-encoding of:
 * nested arrays containing any of the above
 
 this library allows for decoding of:
-* binary-encoded rlp-data
-* hexadecimal-encoded rlp-data
+* rlp-encoded data in binary format
+* rlp-encoded data in hexadecimal string format
 
 note, that decoded data is always binary as per ethereum's design rationale:
 
@@ -44,8 +44,8 @@ require "rlp"
 this library exposes the following modules (in logical order):
 
 * `Rlp`: core library exposing `encode` and `decode` logic
-* `Rlp::RecursiveArray`: is a data type alias allowing for arrays of unknown nesting depth
 * `Rlp::Util`: a collection of utilities to ease the conversion between data types
+* `Rlp::RecursiveArray`: is a data type alias allowing for arrays of unknown nesting depth
 
 basic usage:
 
