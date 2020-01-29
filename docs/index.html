@@ -40,7 +40,7 @@
   <div class="types-list">
     <ul>
   
-  <li class="parent " data-id="github.com/q9f/rlp.cr/Rlp" data-name="rlp">
+  <li class="parent open" data-id="github.com/q9f/rlp.cr/Rlp" data-name="rlp">
       <a href="Rlp.html">Rlp</a>
       
         <ul>
@@ -83,7 +83,7 @@
 
 <p>this library allows for rlp-encoding of:</p>
 
-<ul><li>binary data (assumed encoded)</li><li>boolean values (true, false)</li><li>scalars (positive integers)</li><li>string literals and characters</li><li>arrays containing any of the the above</li><li>nested arrays containing any of the above</li></ul>
+<ul><li>binary data (assumed encoded)</li><li>boolean values (true, false)</li><li>scalars (positive integers)</li><li>string literals and characters</li><li>arrays containing any of the above</li><li>nested arrays containing any of the above</li></ul>
 
 <p>this library allows for decoding of:</p>
 
@@ -122,7 +122,7 @@
 <p>basic usage:</p>
 
 <pre><code class="language-crystal"><span class="c"># rlp-encode a string</span>
-rlp <span class="o">=</span> <span class="t">Rlp</span>.encode(<span class="s">&quot;A cat with a short string.&quot;</span>)
+rlp <span class="o">=</span> <span class="t">Rlp</span>.encode <span class="s">&quot;A cat with a short string.&quot;</span>
 <span class="c"># =&gt; Bytes[154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]</span>
 
 <span class="c"># (optionally) get a hex representation of the rlp-encoded data</span>
@@ -143,6 +143,8 @@ str <span class="o">=</span> <span class="t">Rlp</span><span class="t">::</span>
   </svg>
 </a>documentation</h1>
 
+<p>the full library documentation can be found here: <a href="https://q9f.github.io/rlp.cr/" target="_blank">q9f.github.io/rlp.cr</a></p>
+
 <p>generate a local copy with:</p>
 
 <pre><code>crystal docs</code></pre>
@@ -156,6 +158,33 @@ str <span class="o">=</span> <span class="t">Rlp</span><span class="t">::</span>
 <p>the library is entirely specified through tests in <code>./spec</code>; run:</p>
 
 <pre><code class="language-bash">crystal spec --verbose</code></pre>
+
+<h1><a id="understand" class="anchor" href="#understand">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>understand</h1>
+
+<p>recursive length prefixes are used by the ethereum protocol to store arbitrary data structures, e.g., signed transactions, and is a fundamental serialization used by ethereum's networking protocol <code>devp2p</code> which implements <code>rlpx</code>, the <em>recursive length prefix transfer protocol</em>.</p>
+
+<p><code>rlp</code> can encode any data and data structure. the resulting data is a serialized byte-stream containing prefix bytes, header data, and actual data depending on the type and size of the encoded data.</p>
+
+<pre><code class="language-crystal"><span class="t">Rlp</span>.encode [<span class="n">42</span>, <span class="s">&quot;eth&quot;</span>]
+<span class="c"># =&gt; Bytes[197, 42, 131, 101, 116, 104]</span></code></pre>
+
+<p>deserialization of <code>rlp</code>-encoded byte-streams allows for recovering the underlying data structure. however, <code>rlp</code> is kept minimalistic in its specification and is therefore agnostic to the data types used in the structures.</p>
+
+<pre><code class="language-crystal"><span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">197</span>, <span class="n">42</span>, <span class="n">131</span>, <span class="n">101</span>, <span class="n">116</span>, <span class="n">104</span>]
+<span class="c"># =&gt; [Bytes[42], Bytes[101, 116, 104]]</span></code></pre>
+
+<p>It's up to applications using <code>rlp</code> to further specify protocols of decoding the actual data.</p>
+
+<pre><code class="language-crystal">decoded <span class="o">=</span> <span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">197</span>, <span class="n">42</span>, <span class="n">131</span>, <span class="n">101</span>, <span class="n">116</span>, <span class="n">104</span>]
+protocol <span class="o">=</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">BigInt</span>
+protocol <span class="o">&lt;&lt;</span> <span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_int decoded[<span class="n">0</span>]
+protocol <span class="o">&lt;&lt;</span> <span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_str decoded[<span class="n">1</span>]
+protocol
+<span class="c"># =&gt; [42, &quot;eth&quot;]</span></code></pre>
 
 <h1><a id="contribute" class="anchor" href="#contribute">
   <svg class="octicon-link" aria-hidden="true">

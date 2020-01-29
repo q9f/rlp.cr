@@ -88,6 +88,17 @@
 
   <p>An recursive array alias for arrays of unknown nesting depth.</p>
 
+<pre><code class="language-crystal">a <span class="o">=</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">RecursiveArray</span>
+a <span class="o">&lt;&lt;</span> <span class="s">&quot;&quot;</span>
+a <span class="o">&lt;&lt;</span> <span class="t">Bytes</span>[<span class="n">128</span>]
+a <span class="o">&lt;&lt;</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">RecursiveArray</span></code></pre>
+
+<p><span class="flag orange">TODO</span>  The recursive alias might be deprecated in future,
+ref: <a href="https://github.com/crystal-lang/crystal/issues/5155" target="_blank">crystal-lang/crystal#5155</a>.
+it's worth considering a custom struct holding a <code>@data</code> property
+of type <code>String | Bytes | Array(RecursiveArray)</code> and forward missing methods,
+ref: <a href="https://github.com/crystal-lang/crystal/issues/8719" target="_blank">crystal-lang/crystal#8719</a>.</p>
+
 
 
   <h2>
@@ -121,8 +132,8 @@
   </h2>
   
     
-      <a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L39" target="_blank">
-        rlp.cr
+      <a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/array.cr#L32" target="_blank">
+        array.cr
       </a>
     
     <br/>
