@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.32.0">
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="github.com/q9f/rlp.cr">
+  <title>Rlp::Util - github.com/q9f/rlp.cr</title>
+  <script type="text/javascript">
+    CrystalDoc.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/q9f/rlp.cr/Rlp" data-name="rlp">
+      <a href="../Rlp.html">Rlp</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/q9f/rlp.cr/Rlp/RecursiveArray" data-name="rlp::recursivearray">
+      <a href="../Rlp/RecursiveArray.html">RecursiveArray</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/q9f/rlp.cr/Rlp/Util" data-name="rlp::util">
+      <a href="../Rlp/Util.html">Util</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Rlp::Util
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Exposes a set of utilities to ease the handling of different data types.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L19" target="_blank">
+        util.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#bin_to_hex(b:Bytes)-class-method" class="signature"><strong>.bin_to_hex</strong>(b : Bytes)</a>
+        
+          <div class="summary"><p>Converts binary bytes to a hex-encoded string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bin_to_int(b:Bytes)-class-method" class="signature"><strong>.bin_to_int</strong>(b : Bytes)</a>
+        
+          <div class="summary"><p>Converts binary bytes to a big integer.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bin_to_int(s:String)-class-method" class="signature"><strong>.bin_to_int</strong>(s : String)</a>
+        
+          <div class="summary"><p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_int(b:Bytes)-class-method">.bin_to_int</a></code> with <code>String</code> to allow for conversion of decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be a string already.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bin_to_int(a:Array)-class-method" class="signature"><strong>.bin_to_int</strong>(a : Array)</a>
+        
+          <div class="summary"><p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_int(b:Bytes)-class-method">.bin_to_int</a></code> with <code>Array</code> to allow for conversion of decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be an <code><a href="../Rlp/RecursiveArray.html">RecursiveArray</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bin_to_str(b:Bytes)-class-method" class="signature"><strong>.bin_to_str</strong>(b : Bytes)</a>
+        
+          <div class="summary"><p>Converts binary bytes to a string literal.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bin_to_str(s:String)-class-method" class="signature"><strong>.bin_to_str</strong>(s : String)</a>
+        
+          <div class="summary"><p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_str(b:Bytes)-class-method">.bin_to_str</a></code> with <code>String</code> to allow for conversion of decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be a string already.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bin_to_str(a:Array)-class-method" class="signature"><strong>.bin_to_str</strong>(a : Array)</a>
+        
+          <div class="summary"><p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_str(b:Bytes)-class-method">.bin_to_str</a></code> with <code>Array</code> to allow for conversion of decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be an <code><a href="../Rlp/RecursiveArray.html">RecursiveArray</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#binary_add(a:Bytes,b:Bytes)-class-method" class="signature"><strong>.binary_add</strong>(a : Bytes, b : Bytes)</a>
+        
+          <div class="summary"><p>concatenates two byte slices of uint8</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hex_to_bin(h:String)-class-method" class="signature"><strong>.hex_to_bin</strong>(h : String)</a>
+        
+          <div class="summary"><p>Converts hex-encoded strings to binary bytes data.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hex_to_int(h:String)-class-method" class="signature"><strong>.hex_to_int</strong>(h : String)</a>
+        
+          <div class="summary"><p>Converts hex-encoded strings to big integers.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hex_to_str(h:String)-class-method" class="signature"><strong>.hex_to_str</strong>(h : String)</a>
+        
+          <div class="summary"><p>Converts hex-encoded strings to string literals.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#int_to_bin(i:Int)-class-method" class="signature"><strong>.int_to_bin</strong>(i : Int)</a>
+        
+          <div class="summary"><p>Converts big integers to binary bytes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#int_to_hex(i:Int)-class-method" class="signature"><strong>.int_to_hex</strong>(i : Int)</a>
+        
+          <div class="summary"><p>Converts big integers to hex-encoded strings.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#str_to_bin(s:String)-class-method" class="signature"><strong>.str_to_bin</strong>(s : String)</a>
+        
+          <div class="summary"><p>Converts string literals to binary bytes data.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#str_to_hex(s:String)-class-method" class="signature"><strong>.str_to_hex</strong>(s : String)</a>
+        
+          <div class="summary"><p>Converts string literals to hex-encoded strings.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="bin_to_hex(b:Bytes)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_hex</strong>(b : Bytes)
+
+        <a class="method-permalink" href="#bin_to_hex(b:Bytes)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts binary bytes to a hex-encoded string.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>b</code> (<code>Bytes</code>): the binary bytes data to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_hex <span class="t">Bytes</span>[<span class="n">4</span>, <span class="n">200</span>, <span class="n">29</span>])
+<span class="c"># =&gt; &quot;04c81d&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bin_to_int(b:Bytes)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_int</strong>(b : Bytes)
+
+        <a class="method-permalink" href="#bin_to_int(b:Bytes)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts binary bytes to a big integer.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>b</code> (<code>Bytes</code>): the binary bytes data to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_int <span class="t">Bytes</span>[<span class="n">15</span>, <span class="n">66</span>, <span class="n">64</span>])
+<span class="c"># =&gt; 1000000</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bin_to_int(s:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_int</strong>(s : String)
+
+        <a class="method-permalink" href="#bin_to_int(s:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_int(b:Bytes)-class-method">.bin_to_int</a></code> with <code>String</code> to allow for conversion of
+decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be a string already.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>s</code> (<code>String</code>): the <code><a href="../Rlp.html">Rlp</a></code> string data to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_int <span class="s">&quot;&quot;</span>
+<span class="c"># =&gt; 128</span></code></pre>
+
+<p>Note, that the only <code>String</code> that <code><a href="../Rlp.html#decode(rlp:Bytes)-class-method">Rlp.decode</a></code> actually returns is <code>""</code>.</p>
+
+<p>Raises if <code>s</code> actually contains a string. Should use <code><a href="../Rlp/Util.html#hex_to_int(h:String)-class-method">.hex_to_int</a></code> instead.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bin_to_int(a:Array)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_int</strong>(a : Array)
+
+        <a class="method-permalink" href="#bin_to_int(a:Array)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_int(b:Bytes)-class-method">.bin_to_int</a></code> with <code>Array</code> to allow for conversion of
+decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be an <code><a href="../Rlp/RecursiveArray.html">RecursiveArray</a></code>.</p>
+
+<p>Raises in any case if <code>a</code> actually contains an array. Shouldn't be used
+if decoded <code><a href="../Rlp.html">Rlp</a></code> data could contain nested data structures.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L58" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bin_to_str(b:Bytes)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_str</strong>(b : Bytes)
+
+        <a class="method-permalink" href="#bin_to_str(b:Bytes)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts binary bytes to a string literal.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>b</code> (<code>Bytes</code>): the binary bytes data to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_str <span class="t">Bytes</span>[<span class="n">97</span>, <span class="n">98</span>, <span class="n">99</span>])
+<span class="c"># =&gt; &quot;abc&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L86" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bin_to_str(s:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_str</strong>(s : String)
+
+        <a class="method-permalink" href="#bin_to_str(s:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_str(b:Bytes)-class-method">.bin_to_str</a></code> with <code>String</code> to allow for conversion of
+decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be a string already.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>s</code> (<code>String</code>): the <code><a href="../Rlp.html">Rlp</a></code> string data to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_str <span class="s">&quot;&quot;</span>
+<span class="c"># =&gt; &quot;&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L100" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bin_to_str(a:Array)-class-method">
+      <div class="signature">
+        
+        def self.<strong>bin_to_str</strong>(a : Array)
+
+        <a class="method-permalink" href="#bin_to_str(a:Array)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Overloaded function <code><a href="../Rlp/Util.html#bin_to_str(b:Bytes)-class-method">.bin_to_str</a></code> with <code>Array</code> to allow for conversion of
+decoded <code><a href="../Rlp.html">Rlp</a></code> objects that might be an <code><a href="../Rlp/RecursiveArray.html">RecursiveArray</a></code>.</p>
+
+<p>Raises in any case if <code>a</code> actually contains an array. Shouldn't be used
+if decoded <code><a href="../Rlp.html">Rlp</a></code> data could contain nested data structures.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L109" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="binary_add(a:Bytes,b:Bytes)-class-method">
+      <div class="signature">
+        
+        def self.<strong>binary_add</strong>(a : Bytes, b : Bytes)
+
+        <a class="method-permalink" href="#binary_add(a:Bytes,b:Bytes)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>concatenates two byte slices of uint8</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L212" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex_to_bin(h:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex_to_bin</strong>(h : String)
+
+        <a class="method-permalink" href="#hex_to_bin(h:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts hex-encoded strings to binary bytes data.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>h</code> (<code>String</code>): the hex-encoded string to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_bin <span class="s">&quot;04c81d&quot;</span>
+<span class="c"># =&gt; Bytes[4, 200, 29]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L152" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex_to_int(h:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex_to_int</strong>(h : String)
+
+        <a class="method-permalink" href="#hex_to_int(h:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts hex-encoded strings to big integers.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>h</code> (<code>String</code>): the hex-encoded string to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_int <span class="s">&quot;04c81d&quot;</span>
+<span class="c"># =&gt; 313373</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L166" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex_to_str(h:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex_to_str</strong>(h : String)
+
+        <a class="method-permalink" href="#hex_to_str(h:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts hex-encoded strings to string literals.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>h</code> (<code>String</code>): the hex-encoded string to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_str <span class="s">&quot;646f67&quot;</span>
+<span class="c"># =&gt; &quot;dog&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L180" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="int_to_bin(i:Int)-class-method">
+      <div class="signature">
+        
+        def self.<strong>int_to_bin</strong>(i : Int)
+
+        <a class="method-permalink" href="#int_to_bin(i:Int)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts big integers to binary bytes.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>i</code> (<code>Int</code>): the big integer to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.int_to_bin <span class="n">1_000_000</span>
+<span class="c"># =&gt; Bytes[15, 66, 64]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L122" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="int_to_hex(i:Int)-class-method">
+      <div class="signature">
+        
+        def self.<strong>int_to_hex</strong>(i : Int)
+
+        <a class="method-permalink" href="#int_to_hex(i:Int)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts big integers to hex-encoded strings.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>i</code> (<code>Int</code>): the big integer to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.int_to_hex <span class="n">313_373</span>
+<span class="c"># =&gt; &quot;04c81d&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L137" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="str_to_bin(s:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>str_to_bin</strong>(s : String)
+
+        <a class="method-permalink" href="#str_to_bin(s:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts string literals to binary bytes data.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>s</code> (<code>String</code>): the string literal to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.str_to_bin <span class="s">&quot;abc&quot;</span>
+<span class="c"># =&gt; Bytes[97, 98, 99]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L194" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="str_to_hex(s:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>str_to_hex</strong>(s : String)
+
+        <a class="method-permalink" href="#str_to_hex(s:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Converts string literals to hex-encoded strings.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>s</code> (<code>String</code>): the string literal to convert.</li></ul>
+
+<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.str_to_hex <span class="s">&quot;dog&quot;</span>
+<span class="c"># =&gt; &quot;646f67&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L207" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
