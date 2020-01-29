@@ -12,33 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require "big/big_int"
+
+require "./array.cr"
+require "./constants.cr"
 require "./util.cr"
 
 # The `Rlp` module implementing Ethereum's Recursive Length Prefix
 # for arbitrary data encoding and decoding.
 module Rlp
-  # The offset for string literal encoding is `128`.
-  OFFSET_STRING = 128
-
-  # The offset for array list encoding is `192`.
-  OFFSET_ARRAY = 192
-
-  # The size limit of small data objects to be encoded is `56`.
-  LIMIT_SHORT = 56
-
-  # The size limit of large data objects to be encoded is `256 ** 8`.
-  LIMIT_LONG = BigInt.new(256) ** BigInt.new(8)
-
-  # An empty string is defined as `0x80`.
-  EMPTY_STRING = Bytes[OFFSET_STRING]
-
-  # An empty array is defined as `0xC0`.
-  EMPTY_ARRAY = Bytes[OFFSET_ARRAY]
-
-  # An recursive array alias for arrays of unknown nesting depth.
-  alias RecursiveArray = String | Bytes | Array(RecursiveArray)
-
-  # rlp-encodes binary data
+  # RLP-encodes binary `Bytes` data.
+  #
+  # Parameters:
+  # * `b` (`Bytes`): the binary `Bytes` data to encode.
+  #
+  # ```
+  # Rlp.encode Bytes[15, 66, 64]
+  # # => Bytes[131, 15, 66, 64]
+  # ```
   def self.encode(b : Bytes)
     # if the byte-array contains a single byte solely
     # and that single byte is less than 128 (OFFSET_STRING)
@@ -84,7 +75,15 @@ module Rlp
     end
   end
 
-  # rlp-encodes lists data
+  # RLP-encodes nested `Array` data.
+  #
+  # Parameters:
+  # * `l` (`Array`): the nested `Array` data to encode.
+  #
+  # ```
+  # Rlp.encode [[""], [""]]
+  # # => Bytes[196, 193, 128, 193, 128]
+  # ```
   def self.encode(l : Array)
     # return an empty array byte if we detect an empty list
     if l.empty?
@@ -140,7 +139,15 @@ module Rlp
     end
   end
 
-  # rlp-encodes string data
+  # RLP-encodes `String` literals.
+  #
+  # Parameters:
+  # * `s` (`String`): the `String` literal to encode.
+  #
+  # ```
+  # Rlp.encode "dog"
+  # # => Bytes[131, 100, 111, 103]
+  # ```
   def self.encode(s : String)
     if s.empty?
       # return an empty string byte if we detect an empty string
@@ -153,7 +160,15 @@ module Rlp
     end
   end
 
-  # rlp-encodes scalar data
+  # RLP-encodes scalar `Int` numbers.
+  #
+  # Parameters:
+  # * `i` (`Int`): the scalar `Int` number to encode.
+  #
+  # ```
+  # Rlp.encode 1_000_000
+  # # => Bytes[131, 15, 66, 64]
+  # ```
   def self.encode(i : Int)
     if i === 0
       # the scalar 0 is treated as empty string literal, not as zero byte.
@@ -168,13 +183,29 @@ module Rlp
     end
   end
 
-  # rlp-encodes characters
+  # RLP-encodes `Char` characters.
+  #
+  # Parameters:
+  # * `c` (`Char`): the `Char` character to encode.
+  #
+  # ```
+  # Rlp.encode 'x'
+  # # => Bytes[120]
+  # ```
   def self.encode(c : Char)
     # we simpy treat characters as strings
     return encode c.to_s
   end
 
-  # rlp-encodes boolean data
+  # RLP-encodes boolean `Bool` values.
+  #
+  # Parameters:
+  # * `o` (`Bool`): the boolean `Bool` value to encode.
+  #
+  # ```
+  # Rlp.encode true
+  # # => Bytes[1]
+  # ```
   def self.encode(o : Bool)
     if o
       # basically true is 1
@@ -185,10 +216,20 @@ module Rlp
     end
   end
 
-  # decodes arbitrary data from a recursive length prefix blob.
-  # note, that the returned data only restores the data structure.
-  # it's up to the protocol to determine the meaning of the data
-  # as defined in ethereum's design rationale.
+  # Decodes arbitrary data structures from a given binary
+  # recursive length prefix data stream.
+  #
+  # Parameters:
+  # * `rlp` (`Bytes`): the encoded `Rlp` data to decode.
+  #
+  # ```
+  # Rlp.decode Bytes[195, 193, 192, 192]
+  # # => [[[]], []]
+  # ```
+  #
+  # NOTE: The returned data only restores the data structure.
+  # It's up to the protocol to determine the meaning of the data
+  # as defined in Ethereum's design rationale.
   def self.decode(rlp : Bytes)
     # catch known edgecases and return early
     if rlp === EMPTY_STRING
@@ -268,7 +309,20 @@ module Rlp
     end
   end
 
-  # decodes rlp data from hex-encoded strings
+  # Decodes arbitrary data structures from a given hex-encoded
+  # recursive length prefix data stream.
+  #
+  # Parameters:
+  # * `hex` (`String`): the encoded `Rlp` data to decode.
+  #
+  # ```
+  # Rlp.decode "c7c0c1c0c3c0c1c0"
+  # # => [[], [[]], [[], [[]]]]
+  # ```
+  #
+  # NOTE: The returned data only restores the data structure.
+  # It's up to the protocol to determine the meaning of the data
+  # as defined in Ethereum's design rationale.
   def self.decode(hex : String)
     return decode Util.hex_to_bin hex
   end
