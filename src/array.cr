@@ -24,8 +24,8 @@ module Rlp
   # a << [] of RecursiveArray
   # ```
   #
-  # TODO: The recursive alias might be deprecated in future, 
-  # ref: [crystal-lang/crystal#5155](https://github.com/crystal-lang/crystal/issues/5155). 
+  # TODO: The recursive alias might be deprecated in future,
+  # ref: [crystal-lang/crystal#5155](https://github.com/crystal-lang/crystal/issues/5155).
   # it's worth considering a custom struct holding a `@data` property
   # of type `String | Bytes | Array(RecursiveArray)` and forward missing methods,
   # ref: [crystal-lang/crystal#8719](https://github.com/crystal-lang/crystal/issues/8719).
