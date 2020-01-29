@@ -12,15 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# All numbers will be handled as big integers
-require "big/big_int"
-
 # Exposes a set of utilities to ease the handling of different data types.
+# It comes in handy when building protocols further decoding RLP byte-streams.
+#
+# ```
+# decoded = Rlp.decode Bytes[197, 42, 131, 101, 116, 104]
+# pp decoded
+# # => [Bytes[42], Bytes[101, 116, 104]]
+#
+# protocol = [] of String | Int32 | BigInt
+# protocol << Rlp::Util.bin_to_int decoded[0]
+# protocol << Rlp::Util.bin_to_str decoded[1]
+# pp protocol
+# # => [42, "eth"]
+# ```
 module Rlp::Util
-  # Converts binary bytes to a big integer.
+  # Converts binary `Bytes` to a `BigInt`.
   #
   # Parameters:
-  # * `b` (`Bytes`): the binary bytes data to convert.
+  # * `b` (`Bytes`): the binary `Bytes` data to convert.
   #
   # ```
   # Rlp::Util.bin_to_int Bytes[15, 66, 64])
@@ -30,39 +40,19 @@ module Rlp::Util
     return BigInt.new b.hexstring, 16
   end
 
-  # Overloaded function `bin_to_int` with `String` to allow for conversion of
-  # decoded `Rlp` objects that might be a string already.
+  # Overloads `bin_to_int` with arbitrary data types and raises if
+  # input data is not binary.
   #
-  # Parameters:
-  # * `s` (`String`): the `Rlp` string data to convert.
-  #
-  # ```
-  # Rlp::Util.bin_to_int ""
-  # # => 128
-  # ```
-  #
-  # Note, that the only `String` that `Rlp.decode` actually returns is `""`.
-  #
-  # Raises if `s` actually contains a string. Should use `hex_to_int` instead.
-  def self.bin_to_int(s : String)
-    # empty strings will be treated as 128
-    return 128 if s.size === 0
-    raise "cannot convert string literals to numbers, did you mean `hex_to_int`?"
+  # NOTE: Raises in any case if `a` actually contains non-binary or nested data.
+  # Shouldn't be used if decoded `Rlp` data could contain nested data structures.
+  def self.bin_to_int(a)
+    raise "Cannot convert arbitrary data to numbers, please unpack first!"
   end
 
-  # Overloaded function `bin_to_int` with `Array` to allow for conversion of
-  # decoded `Rlp` objects that might be an `RecursiveArray`.
-  #
-  # Raises in any case if `a` actually contains an array. Shouldn't be used
-  # if decoded `Rlp` data could contain nested data structures.
-  def self.bin_to_int(a : Array)
-    raise "cannot convert array data to numbers, please unpack first"
-  end
-
-  # Converts binary bytes to a hex-encoded string.
+  # Converts binary `Bytes` to a hex-encoded `String`.
   #
   # Parameters:
-  # * `b` (`Bytes`): the binary bytes data to convert.
+  # * `b` (`Bytes`): the binary `Bytes` data to convert.
   #
   # ```
   # Rlp::Util.bin_to_hex Bytes[4, 200, 29])
@@ -74,10 +64,10 @@ module Rlp::Util
     return h
   end
 
-  # Converts binary bytes to a string literal.
+  # Converts binary `Bytes` to a `String` literal.
   #
   # Parameters:
-  # * `b` (`Bytes`): the binary bytes data to convert.
+  # * `b` (`Bytes`): the binary `Bytes` data to convert.
   #
   # ```
   # Rlp::Util.bin_to_str Bytes[97, 98, 99])
@@ -87,33 +77,19 @@ module Rlp::Util
     return String.new b
   end
 
-  # Overloaded function `bin_to_str` with `String` to allow for conversion of
-  # decoded `Rlp` objects that might be a string already.
+  # Overloads `bin_to_str` with arbitrary data types and raises if
+  # input data is not binary.
   #
-  # Parameters:
-  # * `s` (`String`): the `Rlp` string data to convert.
-  #
-  # ```
-  # Rlp::Util.bin_to_str ""
-  # # => ""
-  # ```
-  def self.bin_to_str(s : String)
-    return s
+  # NOTE: Raises in any case if `a` actually contains non-binary or nested data.
+  # Shouldn't be used if decoded `Rlp` data could contain nested data structures.
+  def self.bin_to_str(a)
+    raise "Cannot convert arbitrary data to strings, please unpack first!"
   end
 
-  # Overloaded function `bin_to_str` with `Array` to allow for conversion of
-  # decoded `Rlp` objects that might be an `RecursiveArray`.
-  #
-  # Raises in any case if `a` actually contains an array. Shouldn't be used
-  # if decoded `Rlp` data could contain nested data structures.
-  def self.bin_to_str(a : Array)
-    raise "cannot convert array data to string, please unpack first"
-  end
-
-  # Converts big integers to binary bytes.
+  # Converts integers to binary `Bytes`.
   #
   # Parameters:
-  # * `i` (`Int`): the big integer to convert.
+  # * `i` (`Int`): the integer to convert.
   #
   # ```
   # Rlp::Util.int_to_bin 1_000_000
@@ -125,10 +101,10 @@ module Rlp::Util
     return h.hexbytes
   end
 
-  # Converts big integers to hex-encoded strings.
+  # Converts integers to hex-encoded `String`s.
   #
   # Parameters:
-  # * `i` (`Int`): the big integer to convert.
+  # * `i` (`Int`): the integer to convert.
   #
   # ```
   # Rlp::Util.int_to_hex 313_373
@@ -140,10 +116,10 @@ module Rlp::Util
     return h
   end
 
-  # Converts hex-encoded strings to binary bytes data.
+  # Converts hex-encoded `String`s to binary `Bytes` data.
   #
   # Parameters:
-  # * `h` (`String`): the hex-encoded string to convert.
+  # * `h` (`String`): the hex-encoded `String` to convert.
   #
   # ```
   # Rlp::Util.hex_to_bin "04c81d"
@@ -154,10 +130,10 @@ module Rlp::Util
     return h.hexbytes
   end
 
-  # Converts hex-encoded strings to big integers.
+  # Converts hex-encoded `String`s to `BigInt`s.
   #
   # Parameters:
-  # * `h` (`String`): the hex-encoded string to convert.
+  # * `h` (`String`): the hex-encoded `String` to convert.
   #
   # ```
   # Rlp::Util.hex_to_int "04c81d"
@@ -168,10 +144,10 @@ module Rlp::Util
     return BigInt.new h, 16
   end
 
-  # Converts hex-encoded strings to string literals.
+  # Converts hex-encoded `String`s to `String` literals.
   #
   # Parameters:
-  # * `h` (`String`): the hex-encoded string to convert.
+  # * `h` (`String`): the hex-encoded `String` to convert.
   #
   # ```
   # Rlp::Util.hex_to_str "646f67"
@@ -182,10 +158,10 @@ module Rlp::Util
     return String.new h.hexbytes
   end
 
-  # Converts string literals to binary bytes data.
+  # Converts `String` literals to binary `Bytes` data.
   #
   # Parameters:
-  # * `s` (`String`): the string literal to convert.
+  # * `s` (`String`): the `String` literal to convert.
   #
   # ```
   # Rlp::Util.str_to_bin "abc"
@@ -195,10 +171,10 @@ module Rlp::Util
     return s.to_slice
   end
 
-  # Converts string literals to hex-encoded strings.
+  # Converts `String` literals to hex-encoded `String`s.
   #
   # Parameters:
-  # * `s` (`String`): the string literal to convert.
+  # * `s` (`String`): the `String` literal to convert.
   #
   # ```
   # Rlp::Util.str_to_hex "dog"
@@ -208,22 +184,29 @@ module Rlp::Util
     return s.to_slice.hexstring
   end
 
-  # concatenates two byte slices of uint8
+  # Concatenates two `Bytes` slices of `UInt8`.
+  #
+  # ```
+  # a = Bytes[131]
+  # b = Bytes[97, 98, 99]
+  # Rlp::Util.binary_add a, b
+  # # => Bytes[131, 97, 98, 99]
+  # ```
   def self.binary_add(a : Bytes, b : Bytes)
-    # concatenate bytes by writing to memory
+    # Concatenate `Bytes` by writing to memory.
     c = IO::Memory.new a.bytesize + b.bytesize
 
-    # write the bytes from `a`
+    # Write the `Bytes` from `a`.
     a.each do |v|
       c.write_bytes UInt8.new v
     end
 
-    # write the bytes from `b`
+    # Write the `Bytes` from `b`.
     b.each do |v|
       c.write_bytes UInt8.new v
     end
 
-    # return a slice
+    # Return a slice.
     return c.to_slice
   end
 end
