@@ -112,21 +112,28 @@ for arbitrary data encoding and decoding.</p>
   </h2>
   
     
-      <a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/util.cr#L19" target="_blank">
-        util.cr
+      <a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/array.cr#L17" target="_blank">
+        array.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L19" target="_blank">
+      <a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/constants.cr#L17" target="_blank">
+        constants.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L23" target="_blank">
         rlp.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/version.cr#L17" target="_blank">
+      <a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/version.cr#L17" target="_blank">
         version.cr
       </a>
     
@@ -229,56 +236,56 @@ for arbitrary data encoding and decoding.</p>
       <li class="entry-summary">
         <a href="#decode(rlp:Bytes)-class-method" class="signature"><strong>.decode</strong>(rlp : Bytes)</a>
         
-          <div class="summary"><p>decodes arbitrary data from a recursive length prefix blob.</p></div>
+          <div class="summary"><p>Decodes arbitrary data structures from a given binary recursive length prefix data stream.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#decode(hex:String)-class-method" class="signature"><strong>.decode</strong>(hex : String)</a>
         
-          <div class="summary"><p>decodes rlp data from hex-encoded strings</p></div>
+          <div class="summary"><p>Decodes arbitrary data structures from a given hex-encoded recursive length prefix data stream.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#encode(b:Bytes)-class-method" class="signature"><strong>.encode</strong>(b : Bytes)</a>
         
-          <div class="summary"><p>rlp-encodes binary data</p></div>
+          <div class="summary"><p>RLP-encodes binary <code>Bytes</code> data.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#encode(l:Array)-class-method" class="signature"><strong>.encode</strong>(l : Array)</a>
         
-          <div class="summary"><p>rlp-encodes lists data</p></div>
+          <div class="summary"><p>RLP-encodes nested <code>Array</code> data.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#encode(s:String)-class-method" class="signature"><strong>.encode</strong>(s : String)</a>
         
-          <div class="summary"><p>rlp-encodes string data</p></div>
+          <div class="summary"><p>RLP-encodes <code>String</code> literals.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#encode(i:Int)-class-method" class="signature"><strong>.encode</strong>(i : Int)</a>
         
-          <div class="summary"><p>rlp-encodes scalar data</p></div>
+          <div class="summary"><p>RLP-encodes scalar <code>Int</code> numbers.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#encode(c:Char)-class-method" class="signature"><strong>.encode</strong>(c : Char)</a>
         
-          <div class="summary"><p>rlp-encodes characters</p></div>
+          <div class="summary"><p>RLP-encodes <code>Char</code> characters.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#encode(o:Bool)-class-method" class="signature"><strong>.encode</strong>(o : Bool)</a>
         
-          <div class="summary"><p>rlp-encodes boolean data</p></div>
+          <div class="summary"><p>RLP-encodes boolean <code>Bool</code> values.</p></div>
         
       </li>
     
@@ -316,16 +323,25 @@ for arbitrary data encoding and decoding.</p>
       
         <div class="doc">
           
-          <p>decodes arbitrary data from a recursive length prefix blob.
-note, that the returned data only restores the data structure.
-it's up to the protocol to determine the meaning of the data
-as defined in ethereum's design rationale.</p>
+          <p>Decodes arbitrary data structures from a given binary
+recursive length prefix data stream.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>rlp</code> (<code>Bytes</code>): the encoded <code><a href="Rlp.html">Rlp</a></code> data to decode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">195</span>, <span class="n">193</span>, <span class="n">192</span>, <span class="n">192</span>]
+<span class="c"># =&gt; [[[]], []]</span></code></pre>
+
+<p><span class="flag purple">NOTE</span>  The returned data only restores the data structure.
+It's up to the protocol to determine the meaning of the data
+as defined in Ethereum's design rationale.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L192" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L233" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -340,13 +356,25 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>decodes rlp data from hex-encoded strings</p>
+          <p>Decodes arbitrary data structures from a given hex-encoded
+recursive length prefix data stream.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>hex</code> (<code>String</code>): the encoded <code><a href="Rlp.html">Rlp</a></code> data to decode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.decode <span class="s">&quot;c7c0c1c0c3c0c1c0&quot;</span>
+<span class="c"># =&gt; [[], [[]], [[], [[]]]]</span></code></pre>
+
+<p><span class="flag purple">NOTE</span>  The returned data only restores the data structure.
+It's up to the protocol to determine the meaning of the data
+as defined in Ethereum's design rationale.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L272" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L326" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -361,13 +389,20 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>rlp-encodes binary data</p>
+          <p>RLP-encodes binary <code>Bytes</code> data.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>b</code> (<code>Bytes</code>): the binary <code>Bytes</code> data to encode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.encode <span class="t">Bytes</span>[<span class="n">15</span>, <span class="n">66</span>, <span class="n">64</span>]
+<span class="c"># =&gt; Bytes[131, 15, 66, 64]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -382,13 +417,20 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>rlp-encodes lists data</p>
+          <p>RLP-encodes nested <code>Array</code> data.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>l</code> (<code>Array</code>): the nested <code>Array</code> data to encode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.encode [[<span class="s">&quot;&quot;</span>], [<span class="s">&quot;&quot;</span>]]
+<span class="c"># =&gt; Bytes[196, 193, 128, 193, 128]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L88" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -403,13 +445,20 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>rlp-encodes string data</p>
+          <p>RLP-encodes <code>String</code> literals.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>s</code> (<code>String</code>): the <code>String</code> literal to encode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.encode <span class="s">&quot;dog&quot;</span>
+<span class="c"># =&gt; Bytes[131, 100, 111, 103]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L151" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -424,13 +473,20 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>rlp-encodes scalar data</p>
+          <p>RLP-encodes scalar <code>Int</code> numbers.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>i</code> (<code>Int</code>): the scalar <code>Int</code> number to encode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.encode <span class="n">1_000_000</span>
+<span class="c"># =&gt; Bytes[131, 15, 66, 64]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -445,13 +501,20 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>rlp-encodes characters</p>
+          <p>RLP-encodes <code>Char</code> characters.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>c</code> (<code>Char</code>): the <code>Char</code> character to encode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.encode <span class="s">&#39;x&#39;</span>
+<span class="c"># =&gt; Bytes[120]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L195" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -466,13 +529,20 @@ as defined in ethereum's design rationale.</p>
       
         <div class="doc">
           
-          <p>rlp-encodes boolean data</p>
+          <p>RLP-encodes boolean <code>Bool</code> values.</p>
+
+<p>Parameters:</p>
+
+<ul><li><code>o</code> (<code>Bool</code>): the boolean <code>Bool</code> value to encode.</li></ul>
+
+<pre><code><span class="t">Rlp</span>.encode <span class="n">true</span>
+<span class="c"># =&gt; Bytes[1]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/0d9c98420838f9aa651dc9ae331cad57d51d8b72/src/rlp.cr#L178" target="_blank">View source</a>]
+          [<a href="https://github.com/q9f/rlp.cr/blob/789f036af5c5b1ba29e9a5010bc961164f5cc65d/src/rlp.cr#L209" target="_blank">View source</a>]
         
       </div>
     </div>
