@@ -33,7 +33,7 @@ module Rlp::Util
   # * `b` (`Bytes`): the binary `Bytes` data to convert.
   #
   # ```
-  # Rlp::Util.bin_to_int Bytes[15, 66, 64])
+  # Rlp::Util.bin_to_int Bytes[15, 66, 64]
   # # => 1000000
   # ```
   def self.bin_to_int(b : Bytes)
@@ -55,7 +55,7 @@ module Rlp::Util
   # * `b` (`Bytes`): the binary `Bytes` data to convert.
   #
   # ```
-  # Rlp::Util.bin_to_hex Bytes[4, 200, 29])
+  # Rlp::Util.bin_to_hex Bytes[4, 200, 29]
   # # => "04c81d"
   # ```
   def self.bin_to_hex(b : Bytes)
@@ -70,7 +70,7 @@ module Rlp::Util
   # * `b` (`Bytes`): the binary `Bytes` data to convert.
   #
   # ```
-  # Rlp::Util.bin_to_str Bytes[97, 98, 99])
+  # Rlp::Util.bin_to_str Bytes[97, 98, 99]
   # # => "abc"
   # ```
   def self.bin_to_str(b : Bytes)
