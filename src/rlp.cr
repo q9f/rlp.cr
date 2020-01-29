@@ -31,47 +31,47 @@ module Rlp
   # # => Bytes[131, 15, 66, 64]
   # ```
   def self.encode(b : Bytes)
-    # if the byte-array contains a single byte solely
-    # and that single byte is less than 128 (OFFSET_STRING)
-    # then the input is exactly equal to the output
+    # If the byte-array contains a single byte solely
+    # and that single byte is less than `128` (`OFFSET_STRING`)
+    # then the input is exactly equal to the output.
     if b.bytesize === 1 && b.first < OFFSET_STRING
       return b
     end
 
-    # if the byte-array contains fewer than 56 bytes (LIMIT_SHORT)
+    # If the byte-array contains fewer than `56` bytes (`LIMIT_SHORT`)
     # then the output is equal to the input prefixed by the byte
-    # equal to the length of the byte array plus 128 (OFFSET_STRING)
+    # equal to the length of the byte array plus `128` (`OFFSET_STRING`).
     if b.bytesize < LIMIT_SHORT
-      # length of the byte array plus 128 (OFFSET_STRING)
+      # The length of the byte array plus `128` (`OFFSET_STRING`).
       prefix = UInt8.new b.bytesize + OFFSET_STRING
       p = Bytes[prefix]
 
-      # prefix the data with the prefix byte
+      # Prefixes the data with the prefix byte.
       return Util.binary_add p, b
     end
 
-    # otherwise, the output is equal to the input prefixed by the
+    # Otherwise, the output is equal to the input prefixed by the
     # minimal-length byte-array which when interpreted as a big-endian integer
     # is equal to the length of the input byte array, which is itself prefixed
-    # by the number of bytes required to faithfully encode this length value plus 183.
+    # by the number of bytes required to faithfully encode this length value plus `183`.
     if b.bytesize < LIMIT_LONG
-      # get the size of the data
+      # Gets the size of the data.
       data_size = b.bytesize
 
-      # get the binary representation of the data size
+      # Gets the binary representation of the data size.
       header = Util.int_to_bin data_size
 
-      # faithfully encode this length value plus 183.
+      # Faithfully encodes this length value plus `183`.
       prefix = UInt8.new header.bytesize + OFFSET_STRING + LIMIT_SHORT - 1
       p = Bytes[prefix]
 
-      # prefix the header with the prefix byte
+      # Prefixes the header with the prefix byte.
       header = Util.binary_add p, header
 
-      # prefix the data with the header data
+      # Prefixes the data with the header data.
       return Util.binary_add header, b
     else
-      raise "invalid data provided (size out of range: #{b.bytesize})"
+      raise "Invalid data provided (size out of range: #{b.bytesize})"
     end
   end
 
@@ -85,12 +85,12 @@ module Rlp
   # # => Bytes[196, 193, 128, 193, 128]
   # ```
   def self.encode(l : Array)
-    # return an empty array byte if we detect an empty list
+    # Returns an empty array byte if we detect an empty list.
     if l.empty?
       return EMPTY_ARRAY
     end
 
-    # concatenate the serializations of each contained item
+    # Concatenates the serializations of each contained item.
     body = Slice(UInt8).empty
     l.each do |a|
       if body.size === 0
@@ -100,42 +100,42 @@ module Rlp
       end
     end
 
-    # if the concatenated serializations of each contained item are
-    # less than 56 bytes in length, then the output is equal to
+    # If the concatenated serializations of each contained item are
+    # less than `56` bytes in length, then the output is equal to
     # that concatenation prefixed by the byte equal to the length of
-    # this byte array plus 192 (OFFSET_ARRAY)
+    # this byte array plus `192` (`OFFSET_ARRAY`).
     if body.bytesize < LIMIT_SHORT
-      # length of this byte array plus 192 (OFFSET_ARRAY)
+      # The length of this byte array plus `192` (`OFFSET_ARRAY`).
       prefix = UInt8.new body.bytesize + OFFSET_ARRAY
       p = Bytes[prefix]
 
-      # prefix the data with the prefix byte
+      # Prefixes the data with the prefix byte.
       return Util.binary_add p, body
     end
 
-    # otherwise, the output is equal to the concatenated serializations
+    # Otherwise, the output is equal to the concatenated serializations
     # prefixed by the minimal-length byte-array which when interpreted as
     # a big-endian integer is equal to the length of the concatenated
     # serializations byte array, which is itself prefixed by the number of bytes
-    # required to faithfully encode this length value plus 247.
+    # required to faithfully encode this length value plus `247`.
     if body.bytesize < LIMIT_LONG
-      # get the size of the data
+      # Gets the size of the data.
       data_size = body.bytesize
 
-      # get the binary representation of the data size
+      # Gets the binary representation of the data size.
       header = Util.int_to_bin data_size
 
-      # faithfully encode this length value plus 247.
+      # Faithfully encodes this length value plus `247`.
       prefix = UInt8.new header.bytesize + OFFSET_ARRAY + LIMIT_SHORT - 1
       p = Bytes[prefix]
 
-      # prefix the header with the prefix byte
+      # Prefixes the header with the prefix byte.
       header = Util.binary_add p, header
 
-      # prefix the data with the header data
+      # Prefixes the data with the header data.
       return Util.binary_add header, body
     else
-      raise "invalid list provided (size out of range: #{body.bytesize})"
+      raise "Invalid list provided (size out of range: #{body.bytesize})"
     end
   end
 
@@ -150,13 +150,13 @@ module Rlp
   # ```
   def self.encode(s : String)
     if s.empty?
-      # return an empty string byte if we detect an empty string
+      # Returns an empty string byte if we detect an empty string
       return EMPTY_STRING
     elsif s.size < LIMIT_LONG
-      # a string is simply handled as binary data here
+      # A string is simply handled as binary data here.
       return encode Util.str_to_bin s
     else
-      raise "invalid string provided (size out of range: #{s.size})"
+      raise "Invalid string provided (size out of range: #{s.size})"
     end
   end
 
@@ -171,15 +171,15 @@ module Rlp
   # ```
   def self.encode(i : Int)
     if i === 0
-      # the scalar 0 is treated as empty string literal, not as zero byte.
+      # The scalar `0` is treated as empty string literal, not as zero byte.
       return EMPTY_STRING
     elsif i > 0 && i < LIMIT_LONG
-      # if rlp is used to encode a scalar, defined only as a positive integer
+      # If `Rlp` is used to encode a scalar, defined only as a positive integer
       # it must be specified as the shortest byte array such that the
       # big-endian interpretation of it is equal.
       return encode Util.int_to_bin i
     else
-      raise "invalid scalar provided (out of range: #{i})"
+      raise "Invalid scalar provided (out of range: #{i})"
     end
   end
 
@@ -193,7 +193,7 @@ module Rlp
   # # => Bytes[120]
   # ```
   def self.encode(c : Char)
-    # we simpy treat characters as strings
+    # We simpy treat characters as strings.
     return encode c.to_s
   end
 
@@ -208,10 +208,10 @@ module Rlp
   # ```
   def self.encode(o : Bool)
     if o
-      # basically true is 1
+      # Basically, `true` is `1`.
       return Bytes[1]
     else
-      # and false is 0 which is equal the empty string
+      # And `false` is `0` which is equal the empty string `""`.
       return EMPTY_STRING
     end
   end
@@ -231,80 +231,80 @@ module Rlp
   # It's up to the protocol to determine the meaning of the data
   # as defined in Ethereum's design rationale.
   def self.decode(rlp : Bytes)
-    # catch known edgecases and return early
+    # Catches known edgecases and returns early.
     if rlp === EMPTY_STRING
-      # we return an string here instead of binary because we know for
-      # certain that this value represents an empty string
+      # We return a string here instead of binary because we know for
+      # certain that this value represents an empty string.
       return ""
     elsif rlp === EMPTY_ARRAY
-      # we return an array here instead of binary because we know for
-      # certain that this value represents an empty array
+      # We return an array here instead of binary because we know for
+      # certain that this value represents an empty array.
       return [] of RecursiveArray
     end
 
-    # firstly, takes a look at the prefix byte
+    # Firstly, takes a look at the prefix byte.
     prefix = rlp.first
     length = rlp.bytesize
     if prefix < OFFSET_STRING && length === 1
-      # if the value is lower 128, return the byte directly
+      # If the value is lower than `128`, return the byte directly.
       return rlp
     elsif prefix < OFFSET_STRING + LIMIT_SHORT
-      # if it's a short string, cut off the prefix and return the string
+      # If it's a short string, cut off the prefix and return the string.
       offset = 1
       return rlp[offset, length - offset]
     elsif prefix < OFFSET_ARRAY
-      # if it's a long string, cut off the prefix header and return the string
+      # If it's a long string, cut off the prefix header and return the string.
       offset = 1 + prefix - 183
       return rlp[offset, length - offset]
     else
-      # if it's not a byte or a string, then we have some type of array here
+      # If it's not a byte or a string, then we have some type of array here.
       result = [] of RecursiveArray
       if prefix < OFFSET_ARRAY + LIMIT_SHORT
-        # if it's a small array, cut off the prefix
+        # If it's a small array, cut off the prefix.
         offset = 1
         rlp = rlp[offset, length - offset]
       else
-        # if it's a massive array, cut off the prefix and header
+        # If it's a massive array, cut off the prefix and header.
         offset = 1 + prefix - 247
         rlp = rlp[offset, length - offset]
       end
 
-      # now we recursively decode each item nested in the array
+      # Now we recursively decode each item nested in the array.
       while rlp.bytesize > 0
-        # getting the prefix of each nested item (if any)
+        # Getting the prefix of each nested item (if any).
         prefix = rlp.first
         length = 0
         if prefix < OFFSET_STRING
-          # this is a nested byte of length 1
+          # This is a nested byte of length `1`.
           length = 1
         elsif prefix < OFFSET_STRING + LIMIT_SHORT
-          # this is a nested short string literal
+          # This is a nested short string literal.
           length = 1 + prefix - OFFSET_STRING
         elsif prefix < OFFSET_ARRAY
-          # this is a nested long string literal
+          # This is a nested long string literal.
           header_size = prefix - 183
           header = rlp[1, header_size]
           length = 1 + header_size + Util.bin_to_int header
         elsif prefix < OFFSET_ARRAY + LIMIT_SHORT
-          # this is a nested small array
+          # This is a nested small array.
           length = 1 + prefix - OFFSET_ARRAY
         else
-          # this is a nested massive array
+          # This is a nested massive array.
           header_size = prefix - 247
           header = rlp[1, header_size]
           length = 1 + header_size + Util.bin_to_int header
         end
 
-        # we push the recursively decoded item to the result
+        # We push the recursively decoded item to the result.
         result << decode rlp[0, length]
         offset = length
         length = rlp.size - length
 
-        # and move on with the rest of the data
+        # And move on with the rest of the data.
         rlp = rlp[offset, length]
       end
 
-      # until we decoded all items and return the resulting structure
+      # Until we decoded all items and return the resulting structure.
       return result
     end
   end
