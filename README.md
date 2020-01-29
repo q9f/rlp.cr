@@ -13,7 +13,7 @@ this library allows for rlp-encoding of:
 * boolean values (true, false)
 * scalars (positive integers)
 * string literals and characters
-* arrays containing any of the the above
+* arrays containing any of the above
 * nested arrays containing any of the above
 
 this library allows for decoding of:
@@ -70,6 +70,8 @@ str = Rlp::Util.bin_to_str bin
 
 # documentation
 
+the full library documentation can be found here: [q9f.github.io/rlp.cr](https://q9f.github.io/rlp.cr/)
+
 generate a local copy with:
 
 ```
@@ -82,6 +84,35 @@ the library is entirely specified through tests in `./spec`; run:
 
 ```bash
 crystal spec --verbose
+```
+
+# understand
+
+recursive length prefixes are used by the ethereum protocol to store arbitrary data structures, e.g., signed transactions, and is a fundamental serialization used by ethereum's networking protocol `devp2p` which implements `rlpx`, the _recursive length prefix transfer protocol_.
+
+`rlp` can encode any data and data structure. the resulting data is a serialized byte-stream containing prefix bytes, header data, and actual data depending on the type and size of the encoded data.
+
+```crystal
+Rlp.encode([42, "eth"])
+# => Bytes[197, 42, 131, 101, 116, 104]
+```
+
+deserialization of `rlp`-encoded byte-streams allows for recovering the underlying data structure. however, `rlp` is kept minimalistic in its specification and is therefore agnostic to the data types used in the structures.
+
+```crystal
+Rlp.decode Bytes[197, 42, 131, 101, 116, 104]
+# => [Bytes[42], Bytes[101, 116, 104]]
+```
+
+It's up to applications using `rlp` to further specify protocols of decoding the actual data.
+
+```crystal
+decoded = Rlp.decode Bytes[197, 42, 131, 101, 116, 104]
+protocol = [] of String | Int32 | BigInt
+protocol << Rlp::Util.bin_to_int decoded[0]
+protocol << Rlp::Util.bin_to_str decoded[1]
+protocol
+# => [42, "eth"]
 ```
 
 # contribute
