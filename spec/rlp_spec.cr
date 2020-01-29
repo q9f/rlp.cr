@@ -66,10 +66,10 @@ describe Rlp do
     Rlp.encode(1_000_000).should eq Bytes[131, 15, 66, 64]
 
     # invalid scalars should raise
-    expect_raises Exception, "invalid scalar provided (out of range: 340282366920938463463374607431768211455)" do
+    expect_raises Exception, "Invalid scalar provided (out of range: 340282366920938463463374607431768211455)" do
       Rlp.encode(UInt128::MAX)
     end
-    expect_raises Exception, "invalid scalar provided (out of range: -1)" do
+    expect_raises Exception, "Invalid scalar provided (out of range: -1)" do
       Rlp.encode(-1)
     end
   end

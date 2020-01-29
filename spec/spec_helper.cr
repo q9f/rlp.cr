@@ -13,5 +13,8 @@
 # limitations under the License.
 
 require "spec"
+
+require "../src/array.cr"
+require "../src/constants.cr"
 require "../src/rlp.cr"
 require "../src/util.cr"
