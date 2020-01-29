@@ -52,7 +52,7 @@ basic usage:
 
 ```crystal
 # rlp-encode a string
-rlp = Rlp.encode("A cat with a short string.")
+rlp = Rlp.encode "A cat with a short string."
 # => Bytes[154, 65, 32, 99, 97, 116, 32, 119, 105, 116, 104, 32, 97, 32, 115, 104, 111, 114, 116, 32, 115, 116, 114, 105, 110, 103, 46]
 
 # (optionally) get a hex representation of the rlp-encoded data
@@ -93,7 +93,7 @@ recursive length prefixes are used by the ethereum protocol to store arbitrary d
 `rlp` can encode any data and data structure. the resulting data is a serialized byte-stream containing prefix bytes, header data, and actual data depending on the type and size of the encoded data.
 
 ```crystal
-Rlp.encode([42, "eth"])
+Rlp.encode [42, "eth"]
 # => Bytes[197, 42, 131, 101, 116, 104]
 ```
 
