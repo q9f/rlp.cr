@@ -104,7 +104,7 @@ Rlp.decode Bytes[197, 42, 131, 101, 116, 104]
 # => [Bytes[42], Bytes[101, 116, 104]]
 ```
 
-It's up to applications using `rlp` to further specify protocols of decoding the actual data.
+It's up to applications using `rlp` to further specify protocols for decoding the actual data.
 
 ```crystal
 decoded = Rlp.decode Bytes[197, 42, 131, 101, 116, 104]
