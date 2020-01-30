@@ -177,7 +177,7 @@ str <span class="o">=</span> <span class="t">Rlp</span><span class="t">::</span>
 <pre><code class="language-crystal"><span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">197</span>, <span class="n">42</span>, <span class="n">131</span>, <span class="n">101</span>, <span class="n">116</span>, <span class="n">104</span>]
 <span class="c"># =&gt; [Bytes[42], Bytes[101, 116, 104]]</span></code></pre>
 
-<p>It's up to applications using <code>rlp</code> to further specify protocols of decoding the actual data.</p>
+<p>It's up to applications using <code>rlp</code> to further specify protocols for decoding the actual data.</p>
 
 <pre><code class="language-crystal">decoded <span class="o">=</span> <span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">197</span>, <span class="n">42</span>, <span class="n">131</span>, <span class="n">101</span>, <span class="n">116</span>, <span class="n">104</span>]
 protocol <span class="o">=</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span> <span class="o">|</span> <span class="t">Int32</span> <span class="o">|</span> <span class="t">BigInt</span>
