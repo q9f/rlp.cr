@@ -69,7 +69,7 @@ module Rlp
       header = Util.binary_add p, header
 
       # Prefixes the data with the header data.
-      return Util.binary_add header, b
+      Util.binary_add header, b
     else
       raise "Invalid data provided (size out of range: #{b.bytesize})"
     end
@@ -133,7 +133,7 @@ module Rlp
       header = Util.binary_add p, header
 
       # Prefixes the data with the header data.
-      return Util.binary_add header, body
+      Util.binary_add header, body
     else
       raise "Invalid list provided (size out of range: #{body.bytesize})"
     end
@@ -151,10 +151,10 @@ module Rlp
   def self.encode(s : String)
     if s.empty?
       # Returns an empty string byte if we detect an empty string
-      return EMPTY_STRING
+      EMPTY_STRING
     elsif s.size < LIMIT_LONG
       # A string is simply handled as binary data here.
-      return encode Util.str_to_bin s
+      encode Util.str_to_bin s
     else
       raise "Invalid string provided (size out of range: #{s.size})"
     end
@@ -172,12 +172,12 @@ module Rlp
   def self.encode(i : Int)
     if i === 0
       # The scalar `0` is treated as empty string literal, not as zero byte.
-      return EMPTY_STRING
+      EMPTY_STRING
     elsif i > 0 && i < LIMIT_LONG
       # If `Rlp` is used to encode a scalar, defined only as a positive integer
       # it must be specified as the shortest byte array such that the
       # big-endian interpretation of it is equal.
-      return encode Util.int_to_bin i
+      encode Util.int_to_bin i
     else
       raise "Invalid scalar provided (out of range: #{i})"
     end
@@ -194,7 +194,7 @@ module Rlp
   # ```
   def self.encode(c : Char)
     # We simpy treat characters as strings.
-    return encode c.to_s
+    encode c.to_s
   end
 
   # RLP-encodes boolean `Bool` values.
@@ -209,10 +209,10 @@ module Rlp
   def self.encode(o : Bool)
     if o
       # Basically, `true` is `1`.
-      return Bytes[1]
+      Bytes[1]
     else
       # And `false` is `0` which is equal the empty string `""`.
-      return EMPTY_STRING
+      EMPTY_STRING
     end
   end
 
@@ -247,15 +247,15 @@ module Rlp
     length = rlp.bytesize
     if prefix < OFFSET_STRING && length === 1
       # If the value is lower than `128`, return the byte directly.
-      return rlp
+      rlp
     elsif prefix < OFFSET_STRING + LIMIT_SHORT
       # If it's a short string, cut off the prefix and return the string.
       offset = 1
-      return rlp[offset, length - offset]
+      rlp[offset, length - offset]
     elsif prefix < OFFSET_ARRAY
       # If it's a long string, cut off the prefix header and return the string.
       offset = 1 + prefix - 183
-      return rlp[offset, length - offset]
+      rlp[offset, length - offset]
     else
       # If it's not a byte or a string, then we have some type of array here.
       result = [] of RecursiveArray
@@ -305,7 +305,7 @@ module Rlp
       end
 
       # Until we decoded all items and return the resulting structure.
-      return result
+      result
     end
   end
 
@@ -324,6 +324,6 @@ module Rlp
   # It's up to the protocol to determine the meaning of the data
   # as defined in Ethereum's design rationale.
   def self.decode(hex : String)
-    return decode Util.hex_to_bin hex
+    decode Util.hex_to_bin hex
   end
 end

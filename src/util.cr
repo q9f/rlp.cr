@@ -37,7 +37,7 @@ module Rlp::Util
   # # => 1000000
   # ```
   def self.bin_to_int(b : Bytes)
-    return BigInt.new b.hexstring, 16
+    BigInt.new b.hexstring, 16
   end
 
   # Overloads `bin_to_int` with arbitrary data types and raises if
@@ -60,8 +60,8 @@ module Rlp::Util
   # ```
   def self.bin_to_hex(b : Bytes)
     h = b.hexstring
-    h = "0#{h}" if h.size.odd?
-    return h
+    return "0#{h}" if h.size.odd?
+    h
   end
 
   # Converts binary `Bytes` to a `String` literal.
@@ -74,7 +74,7 @@ module Rlp::Util
   # # => "abc"
   # ```
   def self.bin_to_str(b : Bytes)
-    return String.new b
+    String.new b
   end
 
   # Overloads `bin_to_str` with arbitrary data types and raises if
@@ -98,7 +98,7 @@ module Rlp::Util
   def self.int_to_bin(i : Int)
     h = i.to_s 16
     h = "0#{h}" if h.size.odd?
-    return h.hexbytes
+    h.hexbytes
   end
 
   # Converts integers to hex-encoded `String`s.
@@ -112,8 +112,8 @@ module Rlp::Util
   # ```
   def self.int_to_hex(i : Int)
     h = i.to_s 16
-    h = "0#{h}" if h.size.odd?
-    return h
+    return "0#{h}" if h.size.odd?
+    h
   end
 
   # Converts hex-encoded `String`s to binary `Bytes` data.
@@ -127,7 +127,7 @@ module Rlp::Util
   # ```
   def self.hex_to_bin(h : String)
     h = "0#{h}" if h.size.odd?
-    return h.hexbytes
+    h.hexbytes
   end
 
   # Converts hex-encoded `String`s to `BigInt`s.
@@ -141,7 +141,7 @@ module Rlp::Util
   # ```
   def self.hex_to_int(h : String)
     h = "0#{h}" if h.size.odd?
-    return BigInt.new h, 16
+    BigInt.new h, 16
   end
 
   # Converts hex-encoded `String`s to `String` literals.
@@ -155,7 +155,7 @@ module Rlp::Util
   # ```
   def self.hex_to_str(h : String)
     h = "0#{h}" if h.size.odd?
-    return String.new h.hexbytes
+    String.new h.hexbytes
   end
 
   # Converts `String` literals to binary `Bytes` data.
@@ -168,7 +168,7 @@ module Rlp::Util
   # # => Bytes[97, 98, 99]
   # ```
   def self.str_to_bin(s : String)
-    return s.to_slice
+    s.to_slice
   end
 
   # Converts `String` literals to hex-encoded `String`s.
@@ -181,7 +181,7 @@ module Rlp::Util
   # # => "646f67"
   # ```
   def self.str_to_hex(s : String)
-    return s.to_slice.hexstring
+    s.to_slice.hexstring
   end
 
   # Concatenates two `Bytes` slices of `UInt8`.
@@ -207,6 +207,6 @@ module Rlp::Util
     end
 
     # Return a slice.
-    return c.to_slice
+    c.to_slice
   end
 end
