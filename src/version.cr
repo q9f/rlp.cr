@@ -16,5 +16,5 @@
 # for arbitrary data encoding and decoding.
 module Rlp
   # The version of the `Rlp` module shard.
-  VERSION = "0.1.3"
+  VERSION = "0.1.4"
 end
