@@ -17,7 +17,7 @@
 module Rlp
   # An recursive array alias for arrays of unknown nesting depth.
   #
-  # ```crystal
+  # ```
   # a = [] of RecursiveArray
   # a << ""
   # a << Bytes[128]
