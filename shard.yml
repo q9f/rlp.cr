@@ -1,10 +1,10 @@
 name: rlp
-version: 0.1.7
-description: "a native library implementing recursive lengths prefixes purely for the crystal language"
+version: 0.1.8
+description: "A native library implementing Recursive Lengths Prefixes (RLP) purely for the Crystal programming language."
 
 authors:
-  - /raw PONG _GHMoaCXLT <58883403+q9f@users.noreply.github.com>
+  - Afr Schoe <crystal@q9f.cc>
 
-crystal: 0.36.1
+crystal: 1.1.1
 
 license: APLv2
