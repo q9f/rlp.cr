@@ -1,0 +1,14 @@
+{
+  "files": [
+    {"file": "/home/user/.opt/q9f/rlp.cr/src/rlp.cr", "percent_covered": "90.91", "covered_lines": "80", "total_lines": "88"},
+    {"file": "/home/user/.opt/q9f/rlp.cr/src/util.cr", "percent_covered": "100.00", "covered_lines": "33", "total_lines": "33"},
+    {"file": "/home/user/.opt/q9f/rlp.cr/src/constants.cr", "percent_covered": "100.00", "covered_lines": "3", "total_lines": "3"}
+  ],
+  "percent_covered": "93.55",
+  "covered_lines": 116,
+  "total_lines": 124,
+  "percent_low": 25,
+  "percent_high": 75,
+  "command": "run_coverage",
+  "date": "2021-09-29 14:56:13"
+}
