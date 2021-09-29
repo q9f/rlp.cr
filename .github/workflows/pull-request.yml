@@ -9,9 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install Dependencies
-      run: shards install --verbose
+      run: |
+        shards install --verbose
     - name: Run Test Suite
       run: |
-        shards build --verbose
         crystal tool format --check
         crystal spec --verbose --error-trace --time -Dpreview_mt

@@ -3,54 +3,65 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.32.0">
+<meta name="generator" content="Crystal Docs 1.1.0">
+<meta name="crystal_docs.project_version" content="0.1.7-dev">
+<meta name="crystal_docs.project_name" content="rlp">
+
+
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="rlp">
+  <title>Rlp::Util - rlp 0.1.7-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
     <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
-
-  <meta id="repository-name" content="github.com/q9f/rlp.cr">
-  <title>Rlp::Util - github.com/q9f/rlp.cr</title>
-  <script type="text/javascript">
-    CrystalDoc.base_path = "../";
-  </script>
-</head>
-<body>
-
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
       <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
     </div>
 
-    <div class="repository-links">
-      <a href="../index.html">README</a>
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          rlp
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.1.7-dev
+      </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
   <div class="types-list">
     <ul>
   
-  <li class="parent open current" data-id="github.com/q9f/rlp.cr/Rlp" data-name="rlp">
+  <li class="parent open current" data-id="rlp/Rlp" data-name="rlp">
       <a href="../Rlp.html">Rlp</a>
       
         <ul>
   
-  <li class=" " data-id="github.com/q9f/rlp.cr/Rlp/RecursiveArray" data-name="rlp::recursivearray">
+  <li class=" " data-id="rlp/Rlp/RecursiveArray" data-name="rlp::recursivearray">
       <a href="../Rlp/RecursiveArray.html">RecursiveArray</a>
       
     </li>
   
-  <li class=" current" data-id="github.com/q9f/rlp.cr/Rlp/Util" data-name="rlp::util">
+  <li class=" current" data-id="rlp/Rlp/Util" data-name="rlp::util">
       <a href="../Rlp/Util.html">Util</a>
       
     </li>
@@ -89,7 +100,7 @@
   <p>Exposes a set of utilities to ease the handling of different data types.
 It comes in handy when building protocols further decoding RLP byte-streams.</p>
 
-<pre><code>decoded <span class="o">=</span> <span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">197</span>, <span class="n">42</span>, <span class="n">131</span>, <span class="n">101</span>, <span class="n">116</span>, <span class="n">104</span>]
+<pre><code class="language-crystal">decoded <span class="o">=</span> <span class="t">Rlp</span>.decode <span class="t">Bytes</span>[<span class="n">197</span>, <span class="n">42</span>, <span class="n">131</span>, <span class="n">101</span>, <span class="n">116</span>, <span class="n">104</span>]
 pp decoded
 <span class="c"># =&gt; [Bytes[42], Bytes[101, 116, 104]]</span>
 
@@ -122,9 +133,7 @@ pp protocol
   </h2>
   
     
-      <a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L29" target="_blank">
-        util.cr
-      </a>
+      util.cr
     
     <br/>
   
@@ -276,14 +285,12 @@ pp protocol
 
 <ul><li><code>b</code> (<code>Bytes</code>): the binary <code>Bytes</code> data to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_hex <span class="t">Bytes</span>[<span class="n">4</span>, <span class="n">200</span>, <span class="n">29</span>]
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_hex <span class="t">Bytes</span>[<span class="n">4</span>, <span class="n">200</span>, <span class="n">29</span>]
 <span class="c"># =&gt; &quot;04c81d&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -304,14 +311,12 @@ pp protocol
 
 <ul><li><code>b</code> (<code>Bytes</code>): the binary <code>Bytes</code> data to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_int <span class="t">Bytes</span>[<span class="n">15</span>, <span class="n">66</span>, <span class="n">64</span>]
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_int <span class="t">Bytes</span>[<span class="n">15</span>, <span class="n">66</span>, <span class="n">64</span>]
 <span class="c"># =&gt; 1000000</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -336,8 +341,6 @@ Shouldn't be used if decoded <code><a href="../Rlp.html">Rlp</a></code> data cou
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L48" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -357,14 +360,12 @@ Shouldn't be used if decoded <code><a href="../Rlp.html">Rlp</a></code> data cou
 
 <ul><li><code>b</code> (<code>Bytes</code>): the binary <code>Bytes</code> data to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_str <span class="t">Bytes</span>[<span class="n">97</span>, <span class="n">98</span>, <span class="n">99</span>]
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.bin_to_str <span class="t">Bytes</span>[<span class="n">97</span>, <span class="n">98</span>, <span class="n">99</span>]
 <span class="c"># =&gt; &quot;abc&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -389,8 +390,6 @@ Shouldn't be used if decoded <code><a href="../Rlp.html">Rlp</a></code> data cou
       <br/>
       <div>
         
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L85" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -406,7 +405,7 @@ Shouldn't be used if decoded <code><a href="../Rlp.html">Rlp</a></code> data cou
           
           <p>Concatenates two <code>Bytes</code> slices of <code>UInt8</code>.</p>
 
-<pre><code>a <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">131</span>]
+<pre><code class="language-crystal">a <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">131</span>]
 b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span>, <span class="n">98</span>, <span class="n">99</span>]
 <span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.binary_add a, b
 <span class="c"># =&gt; Bytes[131, 97, 98, 99]</span></code></pre>
@@ -414,8 +413,6 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L195" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -436,14 +433,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>h</code> (<code>String</code>): the hex-encoded <code>String</code> to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_bin <span class="s">&quot;04c81d&quot;</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_bin <span class="s">&quot;04c81d&quot;</span>
 <span class="c"># =&gt; Bytes[4, 200, 29]</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -464,14 +459,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>h</code> (<code>String</code>): the hex-encoded <code>String</code> to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_int <span class="s">&quot;04c81d&quot;</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_int <span class="s">&quot;04c81d&quot;</span>
 <span class="c"># =&gt; 313373</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -492,14 +485,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>h</code> (<code>String</code>): the hex-encoded <code>String</code> to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_str <span class="s">&quot;646f67&quot;</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.hex_to_str <span class="s">&quot;646f67&quot;</span>
 <span class="c"># =&gt; &quot;dog&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -520,14 +511,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>i</code> (<code>Int</code>): the integer to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.int_to_bin <span class="n">1_000_000</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.int_to_bin <span class="n">1_000_000</span>
 <span class="c"># =&gt; Bytes[15, 66, 64]</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L98" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -548,14 +537,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>i</code> (<code>Int</code>): the integer to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.int_to_hex <span class="n">313_373</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.int_to_hex <span class="n">313_373</span>
 <span class="c"># =&gt; &quot;04c81d&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -576,14 +563,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>s</code> (<code>String</code>): the <code>String</code> literal to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.str_to_bin <span class="s">&quot;abc&quot;</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.str_to_bin <span class="s">&quot;abc&quot;</span>
 <span class="c"># =&gt; Bytes[97, 98, 99]</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -604,14 +589,12 @@ b <span class="o">=</span> <span class="t">Bytes</span>[<span class="n">97</span
 
 <ul><li><code>s</code> (<code>String</code>): the <code>String</code> literal to convert.</li></ul>
 
-<pre><code><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.str_to_hex <span class="s">&quot;dog&quot;</span>
+<pre><code class="language-crystal"><span class="t">Rlp</span><span class="t">::</span><span class="t">Util</span>.str_to_hex <span class="s">&quot;dog&quot;</span>
 <span class="c"># =&gt; &quot;646f67&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/q9f/rlp.cr/blob/5a44229dd0d4942943a70aaecb7e729013a91a97/src/util.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
