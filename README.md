@@ -1,6 +1,6 @@
 # rlp.cr
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/q9f/rlp.cr/nightly.yml?branch=main)](https://github.com/q9f/rlp.cr/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/q9f/rlp.cr/spec.yml?branch=main)](https://github.com/q9f/rlp.cr/actions)
 [![Code Coverage](https://codecov.io/gh/q9f/rlp.cr/branch/main/graph/badge.svg?token=84IDVNPO6L)](https://codecov.io/gh/q9f/rlp.cr)
 [![Documentation](https://img.shields.io/badge/docs-html-black)](https://q9f.github.io/rlp.cr/)
 [![Release](https://img.shields.io/github/v/release/q9f/rlp.cr?include_prereleases&color=black)](https://github.com/q9f/rlp.cr/releases/latest)
