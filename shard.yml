@@ -3,7 +3,7 @@ version: 0.1.9
 description: "A native library implementing Recursive Lengths Prefixes (RLP) purely for the Crystal programming language."
 
 authors:
-  - Afr Schoe <crystal@q9f.cc>
+  - Afri Schoedon <crystal@q9f.cc>
 
 crystal: 1.6.2
 
