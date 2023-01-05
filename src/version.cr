@@ -1,4 +1,4 @@
-# Copyright 2020 @q9f
+# Copyright 2020-23 Afri Schoedon @q9f
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,5 +16,5 @@
 # for arbitrary data encoding and decoding.
 module Rlp
   # The version of the `Rlp` module shard.
-  VERSION = "0.1.8"
+  VERSION = "0.1.9"
 end
